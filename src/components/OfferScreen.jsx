@@ -89,7 +89,7 @@ function EbookCover() {
       >
         {!imgError ? (
           <img
-            src="/ebook-cover.jpg"
+            src="/ebook-cover.png"
             alt="Capa do Ebook"
             onError={() => setImgError(true)}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
