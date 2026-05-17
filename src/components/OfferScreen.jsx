@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const CHECKOUT_URL = 'https://checkout.escalepay.com/6050251'
 
@@ -15,15 +15,21 @@ const benefits = [
 const testimonials = [
   {
     quote: 'Nunca pensei que conseguiria entender IA usando apenas o telemóvel.',
-    name: 'Carlos.'
+    name: 'Carlos',
+    initial: 'C',
+    gradient: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)'
   },
   {
     quote: 'O conteúdo é simples, moderno e direto ao ponto.',
-    name: 'Vanessa.'
+    name: 'Vanessa',
+    initial: 'V',
+    gradient: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)'
   },
   {
     quote: 'Finalmente encontrei algo adaptado à minha realidade.',
-    name: 'Jeremias.'
+    name: 'Jeremias',
+    initial: 'J',
+    gradient: 'linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%)'
   },
 ]
 
@@ -40,12 +46,25 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
 }
 
+const slideVariants = {
+  enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+  center: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] }
+  },
+  exit: (dir) => ({
+    x: dir > 0 ? -60 : 60,
+    opacity: 0,
+    transition: { duration: 0.26, ease: [0.55, 0, 1, 0.45] }
+  })
+}
+
 function EbookCover() {
   const [imgError, setImgError] = useState(false)
 
   return (
     <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-      {/* Ambient glow */}
       <div style={{
         position: 'absolute',
         inset: '-24px',
@@ -54,8 +73,6 @@ function EbookCover() {
         zIndex: 0,
         borderRadius: '50%'
       }} />
-
-      {/* 3D book wrapper */}
       <div
         className="float-anim"
         style={{
@@ -78,7 +95,6 @@ function EbookCover() {
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         ) : (
-          /* Premium placeholder until real cover is added */
           <div style={{
             width: '100%', height: '100%',
             background: 'linear-gradient(155deg, #0A1628 0%, #1A3A6B 45%, #0A1628 100%)',
@@ -113,20 +129,156 @@ function EbookCover() {
             }} />
           </div>
         )}
-
-        {/* Spine shadow */}
         <div style={{
           position: 'absolute', left: 0, top: 0, width: '10px', height: '100%',
           background: 'linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.08) 100%)',
           pointerEvents: 'none'
         }} />
-
-        {/* Highlight */}
         <div style={{
           position: 'absolute', top: 0, right: 0, width: '35%', height: '100%',
           background: 'linear-gradient(135deg, transparent 55%, rgba(255,255,255,0.035) 100%)',
           pointerEvents: 'none'
         }} />
+      </div>
+    </div>
+  )
+}
+
+function TestimonialsCarousel() {
+  const [current, setCurrent] = useState(0)
+  const [direction, setDirection] = useState(1)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    if (isPaused) return
+    const id = setInterval(() => {
+      setDirection(1)
+      setCurrent(c => (c + 1) % testimonials.length)
+    }, 3800)
+    return () => clearInterval(id)
+  }, [isPaused])
+
+  const goTo = (idx) => {
+    if (idx === current) return
+    setDirection(idx > current ? 1 : -1)
+    setCurrent(idx)
+  }
+
+  const t = testimonials[current]
+
+  return (
+    <div>
+      {/* Section header */}
+      <div style={{ marginBottom: '16px' }}>
+        <p style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontWeight: 700,
+          color: '#F1F5F9',
+          fontSize: '15px',
+          marginBottom: '4px'
+        }}>
+          Experiências Reais
+        </p>
+        <p style={{ color: '#64748B', fontSize: '12px', lineHeight: '1.5' }}>
+          Pessoas que começaram a ver a IA com outros olhos.
+        </p>
+      </div>
+
+      {/* Card carousel */}
+      <div
+        style={{ overflow: 'hidden' }}
+        onPointerDown={() => setIsPaused(true)}
+        onPointerUp={() => setIsPaused(false)}
+        onPointerLeave={() => setIsPaused(false)}
+      >
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            style={{
+              background: 'rgba(15, 23, 42, 0.72)',
+              border: '1px solid rgba(37, 99, 235, 0.18)',
+              borderRadius: '16px',
+              padding: '18px 20px',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.22), 0 0 0 1px rgba(37,99,235,0.06)',
+            }}
+          >
+            {/* Avatar + name + stars */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+              <div style={{
+                width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0,
+                background: t.gradient,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                border: '1.5px solid rgba(37, 99, 235, 0.28)',
+                boxShadow: '0 0 12px rgba(37,99,235,0.18)'
+              }}>
+                <span style={{
+                  fontSize: '15px', fontWeight: 700, color: '#fff',
+                  fontFamily: "'Space Grotesk', sans-serif"
+                }}>
+                  {t.initial}
+                </span>
+              </div>
+
+              <div>
+                <p style={{
+                  color: '#E2E8F0',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  marginBottom: '4px',
+                  fontFamily: "'Space Grotesk', sans-serif"
+                }}>
+                  {t.name}
+                </p>
+                <div style={{ display: 'flex', gap: '2px' }}>
+                  {[...Array(5)].map((_, j) => (
+                    <svg key={j} width="10" height="10" viewBox="0 0 24 24" fill="#D97706">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Quote */}
+            <p style={{
+              color: '#CBD5E1',
+              fontSize: '13.5px',
+              lineHeight: '1.65',
+              fontStyle: 'italic',
+              fontFamily: "'Inter', sans-serif"
+            }}>
+              "{t.quote}"
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Dot indicators */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '14px' }}>
+        {testimonials.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            style={{
+              width: i === current ? '18px' : '5px',
+              height: '5px',
+              borderRadius: '3px',
+              background: i === current
+                ? 'linear-gradient(90deg, #2563EB, #60A5FA)'
+                : '#1E293B',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+              transition: 'all 0.35s ease',
+              boxShadow: i === current ? '0 0 6px rgba(37,99,235,0.4)' : 'none'
+            }}
+          />
+        ))}
       </div>
     </div>
   )
@@ -138,8 +290,14 @@ export default function OfferScreen() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen w-full flex flex-col items-center relative z-10"
-      style={{ paddingTop: '72px', paddingBottom: '56px', paddingLeft: '16px', paddingRight: '16px' }}
+      className="w-full flex flex-col items-center relative z-10"
+      style={{
+        minHeight: '100svh',
+        paddingTop: '72px',
+        paddingBottom: '60px',
+        paddingLeft: '16px',
+        paddingRight: '16px'
+      }}
     >
       <div className="w-full" style={{ maxWidth: '440px', margin: '0 auto' }}>
 
@@ -216,10 +374,7 @@ export default function OfferScreen() {
                 style={{ padding: '14px 12px' }}
               >
                 <span style={{ fontSize: '18px', lineHeight: 1 }}>{b.icon}</span>
-                <p
-                  className="font-semibold leading-tight"
-                  style={{ color: '#F1F5F9', fontSize: '11.5px' }}
-                >
+                <p className="font-semibold leading-tight" style={{ color: '#F1F5F9', fontSize: '11.5px' }}>
                   {b.title}
                 </p>
                 <p style={{ color: '#64748B', fontSize: '10.5px', lineHeight: '1.4' }}>
@@ -237,7 +392,7 @@ export default function OfferScreen() {
           <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(30,41,59,0.8), transparent)' }} />
         </motion.div>
 
-        {/* Social proof */}
+        {/* Aggregate rating */}
         <motion.div variants={itemVariants} className="text-center mb-7">
           <div className="flex items-center justify-center gap-0.5 mb-1.5">
             {[...Array(5)].map((_, i) => (
@@ -257,7 +412,6 @@ export default function OfferScreen() {
           className="glass-card rounded-3xl mb-6"
           style={{ padding: '24px 20px', border: '1px solid rgba(37,99,235,0.18)' }}
         >
-          {/* Launch badge */}
           <div className="flex items-center justify-center gap-2 mb-5">
             <div className="w-1 h-1 rounded-full" style={{ background: '#F59E0B' }} />
             <span
@@ -269,12 +423,8 @@ export default function OfferScreen() {
             <div className="w-1 h-1 rounded-full" style={{ background: '#F59E0B' }} />
           </div>
 
-          {/* Price anchoring */}
           <div className="text-center mb-6">
-            <p
-              className="line-through mb-1"
-              style={{ color: '#475569', fontSize: '13px' }}
-            >
+            <p className="line-through mb-1" style={{ color: '#475569', fontSize: '13px' }}>
               1.500 MT
             </p>
             <div className="flex items-baseline justify-center gap-2">
@@ -294,7 +444,6 @@ export default function OfferScreen() {
             </div>
           </div>
 
-          {/* CTA */}
           <a
             href={CHECKOUT_URL}
             target="_blank"
@@ -319,7 +468,11 @@ export default function OfferScreen() {
         </motion.div>
 
         {/* Trust signals */}
-        <motion.div variants={itemVariants} className="flex items-center justify-center gap-5 mb-10">
+        <motion.div
+          variants={itemVariants}
+          className="flex items-center justify-center"
+          style={{ gap: '20px', marginBottom: '36px' }}
+        >
           {['Seguro', 'Garantido', 'Acesso imediato'].map((t, i) => (
             <div key={i} className="flex items-center gap-1.5">
               <div className="w-1 h-1 rounded-full" style={{ background: '#2563EB' }} />
@@ -329,70 +482,15 @@ export default function OfferScreen() {
         </motion.div>
 
         {/* Testimonials divider */}
-        <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
+        <motion.div variants={itemVariants} className="flex items-center gap-3 mb-7">
           <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(30,41,59,0.6))' }} />
           <div className="w-1 h-1 rounded-full" style={{ background: '#1E3A5F' }} />
           <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(30,41,59,0.6), transparent)' }} />
         </motion.div>
 
-        {/* Section label */}
-        <motion.div variants={itemVariants} className="text-center mb-5">
-          <p style={{
-            color: '#475569',
-            fontSize: '10px',
-            fontWeight: 600,
-            letterSpacing: '2.5px',
-            textTransform: 'uppercase'
-          }}>
-            Experiências reais
-          </p>
-        </motion.div>
-
-        {/* Testimonial cards */}
-        <motion.div variants={itemVariants} className="flex flex-col gap-3">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              style={{
-                background: 'rgba(15, 23, 42, 0.55)',
-                border: '1px solid rgba(30, 41, 59, 0.6)',
-                borderRadius: '14px',
-                padding: '16px 18px',
-              }}
-            >
-              {/* Stars */}
-              <div style={{ display: 'flex', gap: '2px', marginBottom: '10px' }}>
-                {[...Array(5)].map((_, j) => (
-                  <svg key={j} width="10" height="10" viewBox="0 0 24 24" fill="#D97706">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p style={{
-                color: '#CBD5E1',
-                fontSize: '12.5px',
-                lineHeight: '1.62',
-                marginBottom: '10px',
-                fontStyle: 'italic',
-                fontFamily: "'Inter', sans-serif"
-              }}>
-                "{t.quote}"
-              </p>
-
-              {/* Name */}
-              <p style={{
-                color: '#475569',
-                fontSize: '11px',
-                fontWeight: 600,
-                fontFamily: "'Space Grotesk', sans-serif",
-                letterSpacing: '0.01em'
-              }}>
-                — {t.name}
-              </p>
-            </div>
-          ))}
+        {/* Testimonials carousel */}
+        <motion.div variants={itemVariants}>
+          <TestimonialsCarousel />
         </motion.div>
 
       </div>
