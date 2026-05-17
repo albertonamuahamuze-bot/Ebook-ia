@@ -64,7 +64,7 @@ export default function TransitionScreen({ onDone }) {
             letterSpacing: '-0.01em'
           }}
         >
-          Estamos preparando a tua experiência…
+          Estamos preparando tua experiência…
         </p>
         <p className="text-sm" style={{ color: '#CBD5E1' }}>
           Personalizado para ti
