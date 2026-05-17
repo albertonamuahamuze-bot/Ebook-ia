@@ -17,19 +17,22 @@ const testimonials = [
     quote: 'Nunca pensei que conseguiria entender IA usando apenas o telemóvel.',
     name: 'Carlos',
     initial: 'C',
-    gradient: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)'
+    gradient: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)',
+    avatar: '/avatars/carlos.jpg'
   },
   {
     quote: 'O conteúdo é simples, moderno e direto ao ponto.',
     name: 'Vanessa',
     initial: 'V',
-    gradient: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)'
+    gradient: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)',
+    avatar: '/avatars/vanessa.jpg'
   },
   {
     quote: 'Finalmente encontrei algo adaptado à minha realidade.',
     name: 'Jeremias',
     initial: 'J',
-    gradient: 'linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%)'
+    gradient: 'linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%)',
+    avatar: '/avatars/jeremias.jpg'
   },
 ]
 
@@ -47,16 +50,16 @@ const itemVariants = {
 }
 
 const slideVariants = {
-  enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
+  enter: (dir) => ({ x: dir > 0 ? 56 : -56, opacity: 0 }),
   center: {
     x: 0,
     opacity: 1,
-    transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
   },
   exit: (dir) => ({
-    x: dir > 0 ? -60 : 60,
+    x: dir > 0 ? -56 : 56,
     opacity: 0,
-    transition: { duration: 0.26, ease: [0.55, 0, 1, 0.45] }
+    transition: { duration: 0.2, ease: [0.4, 0, 0.6, 1] }
   })
 }
 
@@ -144,6 +147,38 @@ function EbookCover() {
   )
 }
 
+function Avatar({ src, initial, gradient }) {
+  const [imgError, setImgError] = useState(false)
+
+  const baseStyle = {
+    width: '56px', height: '56px', borderRadius: '50%', flexShrink: 0,
+    border: '1.5px solid rgba(37, 99, 235, 0.28)',
+    boxShadow: '0 0 12px rgba(37,99,235,0.15)',
+    overflow: 'hidden',
+  }
+
+  if (src && !imgError) {
+    return (
+      <div style={baseStyle}>
+        <img
+          src={src}
+          alt={initial}
+          onError={() => setImgError(true)}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ ...baseStyle, background: gradient, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <span style={{ fontSize: '18px', fontWeight: 700, color: '#fff', fontFamily: "'Space Grotesk', sans-serif" }}>
+        {initial}
+      </span>
+    </div>
+  )
+}
+
 function TestimonialsCarousel() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
@@ -154,7 +189,7 @@ function TestimonialsCarousel() {
     const id = setInterval(() => {
       setDirection(1)
       setCurrent(c => (c + 1) % testimonials.length)
-    }, 3800)
+    }, 3000)
     return () => clearInterval(id)
   }, [isPaused])
 
@@ -209,20 +244,7 @@ function TestimonialsCarousel() {
           >
             {/* Avatar + name + stars */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-              <div style={{
-                width: '40px', height: '40px', borderRadius: '50%', flexShrink: 0,
-                background: t.gradient,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: '1.5px solid rgba(37, 99, 235, 0.28)',
-                boxShadow: '0 0 12px rgba(37,99,235,0.18)'
-              }}>
-                <span style={{
-                  fontSize: '15px', fontWeight: 700, color: '#fff',
-                  fontFamily: "'Space Grotesk', sans-serif"
-                }}>
-                  {t.initial}
-                </span>
-              </div>
+              <Avatar src={t.avatar} initial={t.initial} gradient={t.gradient} />
 
               <div>
                 <p style={{
