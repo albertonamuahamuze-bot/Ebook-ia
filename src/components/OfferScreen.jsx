@@ -12,6 +12,21 @@ const benefits = [
   { icon: '🚀', title: 'Estratégias Reais', desc: 'Aplicáveis desde o primeiro dia' },
 ]
 
+const testimonials = [
+  {
+    quote: 'Nunca pensei que conseguiria entender IA usando apenas o telemóvel.',
+    name: 'Carlos.'
+  },
+  {
+    quote: 'O conteúdo é simples, moderno e direto ao ponto.',
+    name: 'Vanessa.'
+  },
+  {
+    quote: 'Finalmente encontrei algo adaptado à minha realidade.',
+    name: 'Jeremias.'
+  },
+]
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -124,7 +139,7 @@ export default function OfferScreen() {
       initial="hidden"
       animate="visible"
       className="min-h-screen w-full flex flex-col items-center relative z-10"
-      style={{ paddingTop: '72px', paddingBottom: '40px', paddingLeft: '16px', paddingRight: '16px' }}
+      style={{ paddingTop: '72px', paddingBottom: '56px', paddingLeft: '16px', paddingRight: '16px' }}
     >
       <div className="w-full" style={{ maxWidth: '440px', margin: '0 auto' }}>
 
@@ -304,11 +319,78 @@ export default function OfferScreen() {
         </motion.div>
 
         {/* Trust signals */}
-        <motion.div variants={itemVariants} className="flex items-center justify-center gap-5">
+        <motion.div variants={itemVariants} className="flex items-center justify-center gap-5 mb-10">
           {['Seguro', 'Garantido', 'Acesso imediato'].map((t, i) => (
             <div key={i} className="flex items-center gap-1.5">
               <div className="w-1 h-1 rounded-full" style={{ background: '#2563EB' }} />
               <span style={{ color: '#64748B', fontSize: '11px' }}>{t}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Testimonials divider */}
+        <motion.div variants={itemVariants} className="flex items-center gap-3 mb-6">
+          <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(30,41,59,0.6))' }} />
+          <div className="w-1 h-1 rounded-full" style={{ background: '#1E3A5F' }} />
+          <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, rgba(30,41,59,0.6), transparent)' }} />
+        </motion.div>
+
+        {/* Section label */}
+        <motion.div variants={itemVariants} className="text-center mb-5">
+          <p style={{
+            color: '#475569',
+            fontSize: '10px',
+            fontWeight: 600,
+            letterSpacing: '2.5px',
+            textTransform: 'uppercase'
+          }}>
+            Experiências reais
+          </p>
+        </motion.div>
+
+        {/* Testimonial cards */}
+        <motion.div variants={itemVariants} className="flex flex-col gap-3">
+          {testimonials.map((t, i) => (
+            <div
+              key={i}
+              style={{
+                background: 'rgba(15, 23, 42, 0.55)',
+                border: '1px solid rgba(30, 41, 59, 0.6)',
+                borderRadius: '14px',
+                padding: '16px 18px',
+              }}
+            >
+              {/* Stars */}
+              <div style={{ display: 'flex', gap: '2px', marginBottom: '10px' }}>
+                {[...Array(5)].map((_, j) => (
+                  <svg key={j} width="10" height="10" viewBox="0 0 24 24" fill="#D97706">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                ))}
+              </div>
+
+              {/* Quote */}
+              <p style={{
+                color: '#CBD5E1',
+                fontSize: '12.5px',
+                lineHeight: '1.62',
+                marginBottom: '10px',
+                fontStyle: 'italic',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                "{t.quote}"
+              </p>
+
+              {/* Name */}
+              <p style={{
+                color: '#475569',
+                fontSize: '11px',
+                fontWeight: 600,
+                fontFamily: "'Space Grotesk', sans-serif",
+                letterSpacing: '0.01em'
+              }}>
+                — {t.name}
+              </p>
             </div>
           ))}
         </motion.div>
