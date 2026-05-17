@@ -18,21 +18,21 @@ const testimonials = [
     name: 'Carlos',
     initial: 'C',
     gradient: 'linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%)',
-    avatar: '/avatars/carlos.jpg'
+    avatar: '/avatars/carlos.png'
   },
   {
     quote: 'O conteúdo é simples, moderno e direto ao ponto.',
     name: 'Vanessa',
     initial: 'V',
     gradient: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%)',
-    avatar: '/avatars/vanessa.jpg'
+    avatar: '/avatars/vanessa.png'
   },
   {
     quote: 'Finalmente encontrei algo adaptado à minha realidade.',
     name: 'Jeremias',
     initial: 'J',
     gradient: 'linear-gradient(135deg, #1E40AF 0%, #60A5FA 100%)',
-    avatar: '/avatars/jeremias.jpg'
+    avatar: '/avatars/jeremias.png'
   },
 ]
 
