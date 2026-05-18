@@ -49,7 +49,7 @@ const QUESTIONS = [
   { field: 'question_4', label: 'Pergunta 4 — Motivação' },
 ]
 
-export default function AdminPanel({ onExit }) {
+export default function AdminPanel({ onExit, onReset }) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -80,13 +80,24 @@ export default function AdminPanel({ onExit }) {
             </h1>
             <p className="text-xs mt-1" style={{ color: '#64748B' }}>Análise do funil de vendas</p>
           </div>
-          <button
-            onClick={onExit}
-            className="text-xs px-4 py-2 rounded-xl font-medium"
-            style={{ background: '#0F172A', border: '1px solid #1E293B', color: '#CBD5E1' }}
-          >
-            Sair
-          </button>
+          <div className="flex gap-2">
+            {onReset && (
+              <button
+                onClick={onReset}
+                className="text-xs px-4 py-2 rounded-xl font-medium"
+                style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#F87171' }}
+              >
+                Reset Funil
+              </button>
+            )}
+            <button
+              onClick={onExit}
+              className="text-xs px-4 py-2 rounded-xl font-medium"
+              style={{ background: '#0F172A', border: '1px solid #1E293B', color: '#CBD5E1' }}
+            >
+              Sair
+            </button>
+          </div>
         </div>
 
         {loading && (

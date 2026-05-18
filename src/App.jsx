@@ -53,11 +53,64 @@ const FUNNEL_STEPS = [
   },
 ]
 
+// ─── Persistence helpers ──────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'funnel-session'
+
 function generateSessionId() {
   return 'sess_' + Math.random().toString(36).slice(2) + '_' + Date.now().toString(36)
 }
 
-// Background decorative elements
+function readStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? JSON.parse(raw) : null
+  } catch { return null }
+}
+
+function writeStorage(data) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  } catch {}
+}
+
+function captureUTM() {
+  try {
+    const p = new URLSearchParams(window.location.search)
+    const s = p.get('utm_source'), c = p.get('utm_campaign'), m = p.get('utm_medium')
+    if (s || c || m) return { utm_source: s, utm_campaign: c, utm_medium: m }
+  } catch {}
+  return null
+}
+
+function initFunnelSession() {
+  const stored = readStorage()
+  const utmData = captureUTM()
+
+  if (stored) {
+    if (utmData && !stored.trafficSource) {
+      const updated = { ...stored, trafficSource: utmData }
+      writeStorage(updated)
+      return updated
+    }
+    return stored
+  }
+
+  const fresh = {
+    sessionId: generateSessionId(),
+    currentStep: 0,
+    answers: [],
+    startedAt: Date.now(),
+    lastUpdated: Date.now(),
+    completed: false,
+    trafficSource: utmData,
+  }
+  writeStorage(fresh)
+  return fresh
+}
+
+// ─── Static UI components ─────────────────────────────────────────────────────
+
 function Background() {
   return (
     <>
@@ -72,9 +125,7 @@ function Background() {
   )
 }
 
-// Header logo
 function Header({ onAdminClick }) {
-  const [showAdmin, setShowAdmin] = useState(false)
   const tapCount = useRef(0)
   const tapTimer = useRef(null)
 
@@ -113,7 +164,8 @@ function Header({ onAdminClick }) {
   )
 }
 
-// 'PHASE' enum
+// ─── Phase constants ──────────────────────────────────────────────────────────
+
 const PHASE = {
   FUNNEL: 'funnel',
   TRANSITION: 'transition',
@@ -121,35 +173,66 @@ const PHASE = {
   ADMIN: 'admin',
 }
 
+// ─── App ──────────────────────────────────────────────────────────────────────
+
 export default function App() {
-  const [phase, setPhase] = useState(PHASE.FUNNEL)
-  const [step, setStep] = useState(0)
-  const [sessionId] = useState(generateSessionId)
+  const [session, setSession] = useState(initFunnelSession)
+  const [phase, setPhase] = useState(() =>
+    readStorage()?.completed ? PHASE.OFFER : PHASE.FUNNEL
+  )
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.body.style.background = '#020617'
-    }
+    document.body.style.background = '#020617'
+  }, [])
+
+  const persistSession = useCallback((updates) => {
+    setSession(prev => {
+      const next = { ...prev, ...updates, lastUpdated: Date.now() }
+      writeStorage(next)
+      return next
+    })
   }, [])
 
   const handleAnswer = useCallback(async (answer) => {
-    const currentStep = FUNNEL_STEPS[step]
-    await saveAnswer(sessionId, currentStep.field, answer)
+    const currentStepData = FUNNEL_STEPS[session.currentStep]
+    const newAnswer = {
+      questionId: session.currentStep + 1,
+      answer,
+      answeredAt: Date.now(),
+    }
+    const isLast = session.currentStep >= FUNNEL_STEPS.length - 1
 
-    if (step < FUNNEL_STEPS.length - 1) {
-      setStep(s => s + 1)
-    } else {
+    persistSession({
+      currentStep: isLast ? session.currentStep : session.currentStep + 1,
+      answers: [...session.answers, newAnswer],
+    })
+
+    await saveAnswer(session.sessionId, currentStepData.field, answer)
+
+    if (isLast) {
       setPhase(PHASE.TRANSITION)
     }
-  }, [step, sessionId])
+  }, [session, persistSession])
 
   const handleTransitionDone = useCallback(async () => {
-    await markCompleted(sessionId)
+    persistSession({ completed: true })
+    await markCompleted(session.sessionId)
     setPhase(PHASE.OFFER)
-  }, [sessionId])
+  }, [session.sessionId, persistSession])
 
   const handleAdminToggle = useCallback(() => {
-    setPhase(p => p === PHASE.ADMIN ? PHASE.FUNNEL : PHASE.ADMIN)
+    setPhase(p =>
+      p === PHASE.ADMIN
+        ? (session.completed ? PHASE.OFFER : PHASE.FUNNEL)
+        : PHASE.ADMIN
+    )
+  }, [session.completed])
+
+  const resetFunnel = useCallback(() => {
+    localStorage.removeItem(STORAGE_KEY)
+    const fresh = initFunnelSession()
+    setSession(fresh)
+    setPhase(PHASE.FUNNEL)
   }, [])
 
   return (
@@ -164,11 +247,11 @@ export default function App() {
         {phase === PHASE.FUNNEL && (
           <motion.div key="funnel" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <FunnelQuestion
-              key={step}
-              step={step}
-              question={FUNNEL_STEPS[step].question}
-              subtext={FUNNEL_STEPS[step].subtext}
-              options={FUNNEL_STEPS[step].options}
+              key={session.currentStep}
+              step={session.currentStep}
+              question={FUNNEL_STEPS[session.currentStep].question}
+              subtext={FUNNEL_STEPS[session.currentStep].subtext}
+              options={FUNNEL_STEPS[session.currentStep].options}
               onAnswer={handleAnswer}
               totalSteps={FUNNEL_STEPS.length}
             />
@@ -189,7 +272,7 @@ export default function App() {
 
         {phase === PHASE.ADMIN && (
           <motion.div key="admin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <AdminPanel onExit={handleAdminToggle} />
+            <AdminPanel onExit={handleAdminToggle} onReset={resetFunnel} />
           </motion.div>
         )}
       </AnimatePresence>
