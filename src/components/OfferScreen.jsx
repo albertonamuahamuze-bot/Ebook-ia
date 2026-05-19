@@ -480,6 +480,9 @@ export default function OfferScreen() {
               padding: '15px 20px',
               display: 'block'
             }}
+            onClick={() => {
+              if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
+            }}
           >
             🚀 Quero Começar Agora
           </a>
