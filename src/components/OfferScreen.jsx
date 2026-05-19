@@ -482,6 +482,7 @@ export default function OfferScreen() {
             }}
             onClick={() => {
               if (typeof fbq === 'function') fbq('track', 'InitiateCheckout');
+              if (typeof ttq !== 'undefined') ttq.track('InitiateCheckout');
             }}
           >
             🚀 Quero Começar Agora
