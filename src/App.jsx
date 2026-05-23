@@ -260,7 +260,7 @@ export default function App() {
 
         {phase === PHASE.OFFER && (
           <motion.div key="offer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <OfferScreen />
+            <OfferScreen onBackToQuiz={resetFunnel} />
           </motion.div>
         )}
 

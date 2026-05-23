@@ -19,29 +19,39 @@ function Reveal({ children, delay = 0 }) {
   )
 }
 
+// ─── Full-width section band ──────────────────────────────────────────────────
+
+function Band({ light = false, children, pt = 64, pb = 64 }) {
+  return (
+    <section style={{
+      background: light ? '#F7F9FF' : '#03081A',
+      padding: `${pt}px 20px ${pb}px`,
+      position: 'relative',
+    }}>
+      <div style={{ maxWidth: '440px', margin: '0 auto' }}>
+        {children}
+      </div>
+    </section>
+  )
+}
+
 // ─── Shared UI primitives ─────────────────────────────────────────────────────
 
-function SectionNum({ n }) {
+function SectionNum({ n, light = false }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
       <span style={{
         fontFamily: "'Space Grotesk', sans-serif",
         fontSize: '11px', fontWeight: 700,
-        letterSpacing: '3px', color: '#3B82F6',
+        letterSpacing: '3px',
+        color: light ? '#1E40FF' : '#3B82F6',
       }}>
         {String(n).padStart(2, '0')}
       </span>
-      <div style={{ width: '28px', height: '1px', background: 'rgba(59,130,246,0.35)' }} />
-    </div>
-  )
-}
-
-function Divider() {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '40px 0' }}>
-      <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, rgba(30,41,59,0.8))' }} />
-      <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#1E3A5F' }} />
-      <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, rgba(30,41,59,0.8), transparent)' }} />
+      <div style={{
+        width: '28px', height: '1px',
+        background: light ? 'rgba(30,64,255,0.25)' : 'rgba(59,130,246,0.35)',
+      }} />
     </div>
   )
 }
@@ -82,7 +92,7 @@ function EbookCover() {
       <div style={{
         position: 'absolute', inset: '-24px',
         background: 'radial-gradient(ellipse at center, rgba(37,99,235,0.18) 0%, transparent 68%)',
-        filter: 'blur(16px)', zIndex: 0, borderRadius: '50%'
+        filter: 'blur(16px)', zIndex: 0, borderRadius: '50%',
       }} />
       <div
         className="float-anim"
@@ -108,13 +118,13 @@ function EbookCover() {
             background: 'linear-gradient(155deg, #0A1628 0%, #1A3A6B 45%, #0A1628 100%)',
             display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center',
-            padding: '20px 14px', textAlign: 'center'
+            padding: '20px 14px', textAlign: 'center',
           }}>
             <div style={{
               width: '44px', height: '44px', borderRadius: '10px',
               background: 'linear-gradient(135deg, #2563EB 0%, #60A5FA 100%)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              marginBottom: '14px', boxShadow: '0 0 14px rgba(37,99,235,0.45)'
+              marginBottom: '14px', boxShadow: '0 0 14px rgba(37,99,235,0.45)',
             }}>
               <span style={{ fontSize: '20px' }}>📱</span>
             </div>
@@ -134,11 +144,11 @@ function EbookCover() {
   )
 }
 
-// ─── Section 1: Hero ─────────────────────────────────────────────────────────
+// ─── Section 1: Hero — DARK ───────────────────────────────────────────────────
 
 function HeroSection() {
   return (
-    <section>
+    <Band light={false} pt={136} pb={64}>
       <Reveal>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
           <div style={{
@@ -149,12 +159,12 @@ function HeroSection() {
           }}>
             <div className="pulse-dot" style={{
               width: '6px', height: '6px', borderRadius: '50%',
-              background: '#60A5FA', boxShadow: '0 0 5px rgba(96,165,250,0.7)'
+              background: '#60A5FA', boxShadow: '0 0 5px rgba(96,165,250,0.7)',
             }} />
             <span style={{
               fontSize: '10px', fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '2px',
-              color: '#60A5FA', fontFamily: "'Space Grotesk', sans-serif"
+              color: '#60A5FA', fontFamily: "'Space Grotesk', sans-serif",
             }}>
               Oportunidade Exclusiva
             </span>
@@ -190,15 +200,15 @@ function HeroSection() {
       </Reveal>
 
       <Reveal delay={0.15}>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <EbookCover />
         </div>
       </Reveal>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 2: Problema ──────────────────────────────────────────────────────
+// ─── Section 2: Problema — LIGHT ─────────────────────────────────────────────
 
 function ProblemaSection() {
   const items = [
@@ -209,18 +219,18 @@ function ProblemaSection() {
   ]
 
   return (
-    <section>
+    <Band light={true}>
       <Reveal>
-        <SectionNum n={2} />
+        <SectionNum n={2} light />
         <h2 style={{
           fontFamily: "'Space Grotesk', sans-serif",
           fontSize: 'clamp(1.2rem, 4.5vw, 1.65rem)',
           fontWeight: 800, lineHeight: '1.2',
-          color: '#F8FAFC', marginBottom: '20px',
+          color: '#0F172A', marginBottom: '20px',
           textTransform: 'uppercase',
         }}>
           A maioria usa o telemóvel para{' '}
-          <span style={{ color: '#3B82F6' }}>DISTRAIR-SE.</span>
+          <span style={{ color: '#1E40FF' }}>DISTRAIR-SE.</span>
         </h2>
       </Reveal>
 
@@ -230,17 +240,18 @@ function ProblemaSection() {
             <div
               key={i}
               style={{
-                background: 'rgba(15,23,42,0.7)',
-                border: '1px solid rgba(30,41,59,0.8)',
+                background: '#FFFFFF',
+                border: '1px solid #E2E8F0',
                 borderRadius: '12px',
                 padding: '14px 12px',
                 display: 'flex', alignItems: 'center', gap: '10px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
               }}
             >
               <span style={{ fontSize: '20px' }}>{item.icon}</span>
               <div>
-                <p style={{ color: '#F1F5F9', fontSize: '12px', fontWeight: 600 }}>{item.label}</p>
-                <p style={{ color: '#EF4444', fontSize: '11px', fontWeight: 700 }}>{item.time} por dia</p>
+                <p style={{ color: '#1E293B', fontSize: '12px', fontWeight: 600 }}>{item.label}</p>
+                <p style={{ color: '#DC2626', fontSize: '11px', fontWeight: 700 }}>{item.time} por dia</p>
               </div>
             </div>
           ))}
@@ -249,8 +260,8 @@ function ProblemaSection() {
 
       <Reveal delay={0.12}>
         <div style={{
-          background: 'rgba(37,99,235,0.08)',
-          border: '1px solid rgba(37,99,235,0.25)',
+          background: 'rgba(30,64,255,0.05)',
+          border: '1px solid rgba(30,64,255,0.2)',
           borderRadius: '12px',
           padding: '16px',
           textAlign: 'center',
@@ -258,19 +269,19 @@ function ProblemaSection() {
           <p style={{
             fontFamily: "'Space Grotesk', sans-serif",
             fontSize: '13.5px', fontWeight: 700,
-            color: '#F8FAFC',
+            color: '#0F172A',
           }}>
             Enquanto isso,{' '}
-            <span style={{ color: '#3B82F6' }}>outros estão aprendendo IA</span>
+            <span style={{ color: '#1E40FF' }}>outros estão aprendendo IA</span>
             {' '}e criando renda.
           </p>
         </div>
       </Reveal>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 3: Solução ───────────────────────────────────────────────────────
+// ─── Section 3: Solução — DARK ────────────────────────────────────────────────
 
 function SolucaoSection() {
   const bullets = [
@@ -281,7 +292,7 @@ function SolucaoSection() {
   ]
 
   return (
-    <section>
+    <Band light={false}>
       <Reveal>
         <SectionNum n={3} />
         <h2 style={{
@@ -312,11 +323,11 @@ function SolucaoSection() {
           </Reveal>
         ))}
       </div>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 4: O Que Vais Receber ───────────────────────────────────────────
+// ─── Section 4: O Que Vais Receber — LIGHT ───────────────────────────────────
 
 function BenefitsSection() {
   const benefits = [
@@ -327,13 +338,13 @@ function BenefitsSection() {
   ]
 
   return (
-    <section>
+    <Band light={true}>
       <Reveal>
-        <SectionNum n={4} />
+        <SectionNum n={4} light />
         <p style={{
           fontSize: '10px', fontWeight: 700,
           textTransform: 'uppercase', letterSpacing: '2px',
-          color: '#60A5FA', marginBottom: '16px',
+          color: '#1E40FF', marginBottom: '16px',
           fontFamily: "'Space Grotesk', sans-serif",
         }}>
           O que vais receber
@@ -346,33 +357,34 @@ function BenefitsSection() {
             <div
               key={i}
               style={{
-                background: 'rgba(15,23,42,0.8)',
-                border: '1px solid rgba(37,99,235,0.15)',
+                background: '#FFFFFF',
+                border: '1px solid #E2E8F0',
                 borderRadius: '16px',
                 padding: '16px 14px',
                 position: 'relative', overflow: 'hidden',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
               }}
             >
               <span style={{
                 position: 'absolute', top: '10px', right: '12px',
                 fontSize: '10px', fontWeight: 700,
-                color: 'rgba(59,130,246,0.25)', letterSpacing: '1px',
+                color: 'rgba(30,64,255,0.15)', letterSpacing: '1px',
                 fontFamily: "'Space Grotesk', sans-serif",
               }}>
                 {b.n}
               </span>
               <span style={{ fontSize: '22px', lineHeight: 1, display: 'block', marginBottom: '10px' }}>{b.icon}</span>
-              <p style={{ color: '#F1F5F9', fontSize: '12px', fontWeight: 700, marginBottom: '4px' }}>{b.title}</p>
+              <p style={{ color: '#0F172A', fontSize: '12px', fontWeight: 700, marginBottom: '4px' }}>{b.title}</p>
               <p style={{ color: '#64748B', fontSize: '10.5px', lineHeight: '1.4' }}>{b.desc}</p>
             </div>
           ))}
         </div>
       </Reveal>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 5: Prova Social ──────────────────────────────────────────────────
+// ─── Section 5: Prova Social — DARK ──────────────────────────────────────────
 
 function ProvaSection() {
   const testimonials = [
@@ -391,7 +403,7 @@ function ProvaSection() {
   ]
 
   return (
-    <section>
+    <Band light={false}>
       <Reveal>
         <SectionNum n={5} />
         <h2 style={{
@@ -451,43 +463,44 @@ function ProvaSection() {
           </Reveal>
         ))}
       </div>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 6: Oferta + Garantia ────────────────────────────────────────────
+// ─── Section 6: Oferta + Garantia — LIGHT ────────────────────────────────────
 
 function OfertaSection() {
   return (
-    <section>
+    <Band light={true}>
       <Reveal>
         <div style={{
-          background: 'rgba(15,23,42,0.8)',
-          border: '1px solid rgba(37,99,235,0.22)',
+          background: '#FFFFFF',
+          border: '1px solid rgba(30,64,255,0.2)',
           borderRadius: '24px',
           padding: '28px 22px',
           marginBottom: '16px',
+          boxShadow: '0 4px 24px rgba(30,64,255,0.08)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '20px' }}>
-            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#F59E0B' }} />
+            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#D97706' }} />
             <span style={{
               textTransform: 'uppercase', fontWeight: 700, letterSpacing: '2.5px',
-              color: '#F59E0B', fontSize: '9.5px', fontFamily: "'Space Grotesk', sans-serif",
+              color: '#D97706', fontSize: '9.5px', fontFamily: "'Space Grotesk', sans-serif",
             }}>
               Oferta de Lançamento
             </span>
-            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#F59E0B' }} />
+            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#D97706' }} />
           </div>
 
           <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <p style={{ color: '#475569', fontSize: '13px', textDecoration: 'line-through', marginBottom: '4px' }}>
+            <p style={{ color: '#94A3B8', fontSize: '13px', textDecoration: 'line-through', marginBottom: '4px' }}>
               1.500 MT
             </p>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: '8px' }}>
               <span style={{ color: '#64748B', fontSize: '12px', fontWeight: 500 }}>Por apenas</span>
               <span style={{
                 fontSize: 'clamp(2rem, 8vw, 2.75rem)',
-                fontWeight: 800, color: '#F8FAFC',
+                fontWeight: 800, color: '#0F172A',
                 fontFamily: "'Space Grotesk', sans-serif",
                 letterSpacing: '-0.04em', lineHeight: 1,
               }}>
@@ -498,17 +511,16 @@ function OfertaSection() {
 
           <CTAButton large />
 
-          <p style={{ textAlign: 'center', marginTop: '12px', color: '#475569', fontSize: '11px' }}>
+          <p style={{ textAlign: 'center', marginTop: '12px', color: '#94A3B8', fontSize: '11px' }}>
             Acesso imediato após a confirmação
           </p>
         </div>
       </Reveal>
 
-      {/* Guarantee */}
       <Reveal delay={0.08}>
         <div style={{
-          background: 'rgba(34,197,94,0.05)',
-          border: '1px solid rgba(34,197,94,0.2)',
+          background: 'rgba(22,163,74,0.05)',
+          border: '1px solid rgba(22,163,74,0.25)',
           borderRadius: '16px',
           padding: '18px 20px',
           display: 'flex', alignItems: 'flex-start', gap: '14px',
@@ -516,29 +528,29 @@ function OfertaSection() {
           <div style={{ flexShrink: 0, marginTop: '2px' }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
               <path d="M12 2L4 6V12C4 15.31 7.58 19.1 12 20.93C16.42 19.1 20 15.31 20 12V6L12 2Z"
-                fill="rgba(34,197,94,0.15)" stroke="#22C55E" strokeWidth="1.5"/>
-              <path d="M9 12l2 2 4-4" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                fill="rgba(22,163,74,0.12)" stroke="#16A34A" strokeWidth="1.5"/>
+              <path d="M9 12l2 2 4-4" stroke="#16A34A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div>
             <p style={{
-              color: '#22C55E', fontSize: '12px', fontWeight: 700,
+              color: '#16A34A', fontSize: '12px', fontWeight: 700,
               textTransform: 'uppercase', letterSpacing: '1px',
               marginBottom: '5px', fontFamily: "'Space Grotesk', sans-serif",
             }}>
               Garantia de 7 dias
             </p>
-            <p style={{ color: '#94A3B8', fontSize: '12.5px', lineHeight: '1.6' }}>
+            <p style={{ color: '#475569', fontSize: '12.5px', lineHeight: '1.6' }}>
               Se não ficares satisfeito, devolvemos o teu dinheiro. Sem perguntas.
             </p>
           </div>
         </div>
       </Reveal>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 7: Instruções de Pagamento ──────────────────────────────────────
+// ─── Section 7: Pagamento — DARK ─────────────────────────────────────────────
 
 function PagamentoSection() {
   const steps = [
@@ -548,7 +560,7 @@ function PagamentoSection() {
   ]
 
   return (
-    <section>
+    <Band light={false}>
       <Reveal>
         <p style={{
           fontSize: '10px', fontWeight: 700,
@@ -595,7 +607,6 @@ function PagamentoSection() {
         ))}
       </div>
 
-      {/* Payment method badges */}
       <Reveal delay={0.22}>
         <div style={{ display: 'flex', gap: '10px' }}>
           <div style={{
@@ -635,15 +646,15 @@ function PagamentoSection() {
           </div>
         </div>
       </Reveal>
-    </section>
+    </Band>
   )
 }
 
-// ─── Section 8: CTA Final ─────────────────────────────────────────────────────
+// ─── Section 8: CTA Final — DARK ─────────────────────────────────────────────
 
-function CTAFinalSection() {
+function CTAFinalSection({ onBackToQuiz }) {
   return (
-    <section>
+    <Band light={false} pt={48} pb={80}>
       <Reveal>
         <CTAButton large label="🚀 Quero Começar Agora" />
 
@@ -670,12 +681,35 @@ function CTAFinalSection() {
           paddingTop: '20px',
           textAlign: 'center',
         }}>
-          <p style={{ color: '#334155', fontSize: '11px', lineHeight: '1.9' }}>
+          <p style={{ color: '#334155', fontSize: '11px', lineHeight: '1.9', marginBottom: '20px' }}>
             100% Online · Acesso Imediato · 7 Dias de Garantia · Conteúdo Actualizado
           </p>
+
+          {onBackToQuiz && (
+            <button
+              onClick={onBackToQuiz}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#334155',
+                fontSize: '11px',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '6px 0',
+                fontFamily: "'Inter', sans-serif",
+                transition: 'color 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = '#60A5FA'}
+              onMouseLeave={e => e.currentTarget.style.color = '#334155'}
+            >
+              ↩ Refazer o questionário
+            </button>
+          )}
         </div>
       </Reveal>
-    </section>
+    </Band>
   )
 }
 
@@ -712,18 +746,14 @@ function WhatsAppButton() {
       <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
         <span style={{
           color: 'rgba(255,255,255,0.75)',
-          fontSize: '9px',
-          fontWeight: 600,
-          textTransform: 'uppercase',
-          letterSpacing: '0.8px',
+          fontSize: '9px', fontWeight: 600,
+          textTransform: 'uppercase', letterSpacing: '0.8px',
           fontFamily: "'Space Grotesk', sans-serif",
         }}>
           Suporte
         </span>
         <span style={{
-          color: '#fff',
-          fontSize: '12px',
-          fontWeight: 700,
+          color: '#fff', fontSize: '12px', fontWeight: 700,
           fontFamily: "'Space Grotesk', sans-serif",
         }}>
           WhatsApp
@@ -735,41 +765,18 @@ function WhatsAppButton() {
 
 // ─── Main export ──────────────────────────────────────────────────────────────
 
-export default function OfferScreen() {
+export default function OfferScreen({ onBackToQuiz }) {
   return (
     <>
       <WhatsAppButton />
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          width: '100%',
-          paddingTop: '72px',
-          paddingBottom: '60px',
-          paddingLeft: '16px',
-          paddingRight: '16px',
-        }}
-      >
-        <div style={{ maxWidth: '440px', margin: '0 auto' }}>
-          <HeroSection />
-          <Divider />
-          <ProblemaSection />
-          <Divider />
-          <SolucaoSection />
-          <Divider />
-          <BenefitsSection />
-          <Divider />
-          <ProvaSection />
-          <Divider />
-          <OfertaSection />
-          <Divider />
-          <PagamentoSection />
-          <Divider />
-          <CTAFinalSection />
-        </div>
-      </motion.div>
+      <HeroSection />
+      <ProblemaSection />
+      <SolucaoSection />
+      <BenefitsSection />
+      <ProvaSection />
+      <OfertaSection />
+      <PagamentoSection />
+      <CTAFinalSection onBackToQuiz={onBackToQuiz} />
     </>
   )
 }
