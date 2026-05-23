@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 
 export default function TransitionScreen({ onDone }) {
   useEffect(() => {
-    const timer = setTimeout(onDone, 2200)
+    const timer = setTimeout(onDone, 2000)
     return () => clearTimeout(timer)
   }, [onDone])
 
@@ -31,7 +31,6 @@ export default function TransitionScreen({ onDone }) {
           />
         ))}
 
-        {/* Center icon */}
         <motion.div
           className="relative z-10 w-14 h-14 rounded-2xl flex items-center justify-center"
           style={{
@@ -48,7 +47,6 @@ export default function TransitionScreen({ onDone }) {
         </motion.div>
       </div>
 
-      {/* Text */}
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: 10 }}
@@ -64,14 +62,13 @@ export default function TransitionScreen({ onDone }) {
             letterSpacing: '-0.01em'
           }}
         >
-          Estamos preparando tua experiência…
+          A preparar o teu plano personalizado…
         </p>
         <p className="text-sm" style={{ color: '#CBD5E1' }}>
           Personalizado para ti
         </p>
       </motion.div>
 
-      {/* Animated dots */}
       <motion.div className="flex gap-2 mt-8">
         {[0, 1, 2].map((i) => (
           <motion.div

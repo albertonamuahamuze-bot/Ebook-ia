@@ -6,50 +6,19 @@ import OfferScreen from './components/OfferScreen'
 import AdminPanel from './components/AdminPanel'
 import { saveAnswer, markCompleted } from './lib/supabase'
 
+const CHECKOUT_URL = 'https://checkout.escalepay.com/6050251'
+
 const FUNNEL_STEPS = [
   {
-    question: 'Hoje, muita gente passa horas no telemóvel… mas quase nunca usa isso para crescer na vida.',
-    subtext: 'E contigo? Como sentes que usas o teu tempo online atualmente?',
+    question: 'O teu telemóvel está a trabalhar para ti ou contra ti?',
+    subtext: 'Como usas o teu tempo online hoje?',
     options: [
       'Apenas entretenimento',
       'Redes sociais e vídeos',
-      'Tento aprender algo novo às vezes',
-      'Quero usar melhor meu tempo online',
+      'Aprendo algo novo às vezes',
+      'Quero usar melhor o meu tempo online',
     ],
     field: 'question_1',
-  },
-  {
-    question: 'Já imaginaste se o mesmo telemóvel que usas todos os dias pudesse abrir novas oportunidades para tua vida?',
-    subtext: null,
-    options: [
-      'Nunca pensei nisso',
-      'Já pensei, mas não sabia como',
-      'Tenho interesse em aprender',
-      'Quero mudar minha situação atual',
-    ],
-    field: 'question_2',
-  },
-  {
-    question: 'Hoje existem pessoas comuns usando Inteligência Artificial para criar renda, aprender habilidades e começar online usando apenas o telemóvel.',
-    subtext: 'O que mais te chama atenção nisso?',
-    options: [
-      'Criar uma renda extra',
-      'Aprender algo moderno',
-      'Evoluir pessoalmente',
-      'Construir novas oportunidades',
-    ],
-    field: 'question_3',
-  },
-  {
-    question: 'Se existisse um caminho simples, prático e adaptado à tua realidade… gostarias de aprender como começar?',
-    subtext: null,
-    options: [
-      'Sim, quero começar',
-      'Quero entender melhor',
-      'Isso faz sentido para mim',
-      'Quero ver como funciona',
-    ],
-    field: 'question_4',
   },
 ]
 
@@ -125,7 +94,7 @@ function Background() {
   )
 }
 
-function Header({ onAdminClick }) {
+function Header({ onAdminClick, showBuyButton }) {
   const tapCount = useRef(0)
   const tapTimer = useRef(null)
 
@@ -141,7 +110,7 @@ function Header({ onAdminClick }) {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-5 py-4"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4"
       style={{ background: 'linear-gradient(180deg, rgba(2,6,23,0.95) 0%, transparent 100%)' }}
     >
       <button onClick={handleLogoTap} className="flex items-center gap-2.5 select-none">
@@ -160,6 +129,28 @@ function Header({ onAdminClick }) {
           Telemóvel com IA
         </span>
       </button>
+
+      {showBuyButton && (
+        <a
+          href={CHECKOUT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary rounded-xl font-semibold"
+          style={{
+            padding: '8px 16px',
+            fontSize: '12px',
+            color: '#fff',
+            textDecoration: 'none',
+            fontFamily: "'Space Grotesk', sans-serif",
+            letterSpacing: '-0.01em'
+          }}
+          onClick={() => {
+            if (typeof fbq === 'function') fbq('track', 'InitiateCheckout')
+          }}
+        >
+          Comprar
+        </a>
+      )}
     </header>
   )
 }
@@ -240,7 +231,10 @@ export default function App() {
       <Background />
 
       {phase !== PHASE.ADMIN && (
-        <Header onAdminClick={handleAdminToggle} />
+        <Header
+          onAdminClick={handleAdminToggle}
+          showBuyButton={phase === PHASE.OFFER}
+        />
       )}
 
       <AnimatePresence mode="wait">
