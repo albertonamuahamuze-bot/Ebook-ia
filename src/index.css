@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #020617;
-  --bg-secondary: #0F172A;
-  --blue-main: #2563EB;
-  --blue-glow: #3B82F6;
-  --blue-neon: #60A5FA;
+  --bg-primary: #03081A;
+  --bg-secondary: #080F28;
+  --blue-main: #1E40FF;
+  --blue-glow: #4B73FF;
+  --blue-neon: #6B8FFF;
   --text-primary: #F8FAFC;
   --text-secondary: #CBD5E1;
-  --border: #1E293B;
+  --border: #0F1A3A;
 }
 
 * {
@@ -24,7 +24,7 @@ html, body, #root {
 }
 
 body {
-  background-color: #020617;
+  background-color: #03081A;
   color: #F8FAFC;
   font-family: 'Inter', 'Space Grotesk', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -79,7 +79,7 @@ body {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(30, 64, 255, 0.1) 0%, transparent 70%);
   top: -200px;
   right: -200px;
   pointer-events: none;
@@ -91,7 +91,7 @@ body {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(30, 64, 255, 0.07) 0%, transparent 70%);
   bottom: -150px;
   left: -150px;
   pointer-events: none;
@@ -100,8 +100,8 @@ body {
 
 /* Button premium */
 .btn-primary {
-  background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
-  border: 1px solid rgba(96, 165, 250, 0.3);
+  background: linear-gradient(135deg, #1E40FF 0%, #4B73FF 100%);
+  border: 1px solid rgba(107, 143, 255, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -123,8 +123,8 @@ body {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
-  box-shadow: 0 0 18px rgba(59, 130, 246, 0.38), 0 0 36px rgba(59, 130, 246, 0.1);
+  background: linear-gradient(135deg, #3355FF 0%, #6B8FFF 100%);
+  box-shadow: 0 0 18px rgba(75, 115, 255, 0.45), 0 0 36px rgba(75, 115, 255, 0.15);
   transform: translateY(-1px);
 }
 
@@ -198,8 +198,8 @@ body {
 /* Grid pattern background */
 .grid-pattern {
   background-image:
-    linear-gradient(rgba(30, 41, 59, 0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+    linear-gradient(rgba(30, 50, 120, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 50, 120, 0.2) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 

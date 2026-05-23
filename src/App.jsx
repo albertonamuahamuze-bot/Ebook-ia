@@ -173,7 +173,7 @@ export default function App() {
   )
 
   useEffect(() => {
-    document.body.style.background = '#020617'
+    document.body.style.background = '#03081A'
   }, [])
 
   const persistSession = useCallback((updates) => {
@@ -227,7 +227,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="relative min-h-screen" style={{ background: '#020617' }}>
+    <div className="relative min-h-screen" style={{ background: '#03081A' }}>
       <Background />
 
       {phase !== PHASE.ADMIN && (
