@@ -606,6 +606,23 @@ section{padding:96px 0}
 
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1298654261751958');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1298654261751958&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -1050,7 +1067,7 @@ section{padding:96px 0}
         <div class="oferta-old">De 3.350 MZN por apenas</div>
         <div class="oferta-price"><sup>MT</sup>397</div>
         <div class="oferta-note">Pagamento Único · Acesso Vitalício</div>
-        <button class="oferta-cta" onclick="window.open('https://checkout.escalepay.com/6050251','_blank')">
+        <button class="oferta-cta" onclick="fbq('track','InitiateCheckout',{content_name:'Negócios com IA',currency:'MZN',value:397});window.open('https://checkout.escalepay.com/6050251','_blank')">
           GARANTIR O MEU ACESSO AGORA
           <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
@@ -1292,6 +1309,26 @@ const perfIO=new IntersectionObserver(entries=>{
   });
 },{threshold:0.05});
 document.querySelectorAll('.hero,.garantia').forEach(s=>perfIO.observe(s));
+
+// ── META PIXEL: ViewContent quando chega à oferta
+(function(){
+  const ofertaEl=document.getElementById('oferta');
+  if(!ofertaEl||typeof fbq==='undefined') return;
+  const viewIO=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        fbq('track','ViewContent',{
+          content_name:'Negócios com IA',
+          content_type:'product',
+          currency:'MZN',
+          value:397
+        });
+        viewIO.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  viewIO.observe(ofertaEl);
+})();
 </script>
 </body>
 </html>
