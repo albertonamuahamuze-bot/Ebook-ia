@@ -245,8 +245,36 @@ section{padding:96px 0}
 .stack-list{display:grid;gap:12px;margin-top:40px;max-width:900px}
 .stack-row{display:grid;grid-template-columns:50px 1fr auto;gap:18px;align-items:center;padding:18px 22px;border-radius:6px;background:var(--card);border:1px solid var(--border);transition:all .2s}
 .stack-row:hover{border-color:var(--bs);transform:translateX(5px)}
-.stack-ico{width:46px;height:46px;border-radius:50%;border:1px solid var(--bs);display:flex;align-items:center;justify-content:center;background:rgba(0,207,255,.05);flex-shrink:0}
-.stack-ico svg{width:20px;height:20px;stroke:var(--cyan);fill:none;stroke-width:1.5}
+.stack-ico{
+  width:52px;height:52px;border-radius:50%;
+  border:1.5px solid var(--bs);
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(0,207,255,.14),rgba(0,207,255,.04));
+  flex-shrink:0;
+  box-shadow:0 0 22px rgba(0,207,255,.2),inset 0 0 14px rgba(0,207,255,.08);
+  transition:all .3s;
+  position:relative;
+}
+.stack-ico::after{
+  content:'';position:absolute;inset:-4px;
+  border-radius:50%;
+  border:1px solid rgba(0,207,255,.15);
+}
+.stack-row:hover .stack-ico{
+  background:linear-gradient(135deg,rgba(0,207,255,.22),rgba(0,207,255,.08));
+  box-shadow:0 0 32px rgba(0,207,255,.4),inset 0 0 18px rgba(0,207,255,.12);
+  transform:scale(1.08);
+}
+.stack-ico i,.stack-ico svg{
+  font-size:22px;
+  color:var(--cyan);
+  filter:drop-shadow(0 0 5px var(--cyan));
+  transition:filter .3s;
+}
+.stack-row:hover .stack-ico i,
+.stack-row:hover .stack-ico svg{
+  filter:drop-shadow(0 0 10px var(--cyan));
+}
 .stack-n strong{font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;display:block;letter-spacing:.04em}
 .stack-n span{font-size:12px;color:var(--muted)}
 .stack-p{font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--muted);text-decoration:line-through;white-space:nowrap;letter-spacing:.05em}
@@ -400,15 +428,48 @@ section{padding:96px 0}
   max-width:960px;margin:0 auto;
   position:relative;
 }
+.dep-slider-inner{
+  position:relative;
+  overflow:hidden;
+  min-height:360px;
+}
 .dep-slide{
-  display:none;
+  display:grid;
   grid-template-columns:1fr 1fr;
   gap:80px;align-items:center;
+  position:absolute;
+  top:0;left:0;right:0;
+  opacity:0;
+  visibility:hidden;
+  transform:translateX(80px);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.4,0,.2,1), visibility .5s;
+  pointer-events:none;
 }
 @media(max-width:700px){
-  .dep-slide{grid-template-columns:1fr;gap:40px}
+  .dep-slide{grid-template-columns:1fr;gap:40px;min-height:500px}
+  .dep-slider-inner{min-height:520px}
 }
-.dep-slide.active{display:grid}
+.dep-slide.active{
+  position:relative;
+  opacity:1;
+  visibility:visible;
+  transform:translateX(0);
+  pointer-events:all;
+}
+.dep-slide.exit-left{
+  position:absolute;
+  opacity:0;
+  visibility:hidden;
+  transform:translateX(-80px);
+  transition:opacity .4s ease, transform .4s cubic-bezier(.4,0,.2,1);
+}
+.dep-slide.exit-right{
+  position:absolute;
+  opacity:0;
+  visibility:hidden;
+  transform:translateX(80px);
+  transition:opacity .4s ease, transform .4s cubic-bezier(.4,0,.2,1);
+}
 .dep-slide-photo{
   position:relative;
   display:flex;justify-content:center;align-items:center;
@@ -758,7 +819,7 @@ section{padding:96px 0}
         <div class="autor-stats">
           <div class="autor-stat"><div class="n">+2</div><div class="l">Anos aplicando</div></div>
           <div class="autor-stat"><div class="n">8</div><div class="l">Métodos testados</div></div>
-          <div class="autor-stat"><div class="n">MZN</div><div class="l">Baseado em Maputo</div></div>
+          <div class="autor-stat"><div class="n">30</div><div class="l">Dias de Plano</div></div>
         </div>
         <div class="autor-name">ALBERTO N. MUZÉ</div>
         <div class="autor-role">Empreendedor Digital · Maputo, Moçambique</div>
@@ -829,6 +890,7 @@ section{padding:96px 0}
     </div>
 
     <div class="dep-slider-wrap">
+      <div class="dep-slider-inner">
 
       <!-- SLIDE 1 -->
       <div class="dep-slide active">
@@ -920,6 +982,7 @@ section{padding:96px 0}
         </div>
       </div>
 
+      </div><!-- /.dep-slider-inner -->
     </div>
 
     <p class="dep-m-disc">Os resultados variam conforme dedicação, tempo investido e aplicação do método.</p>
@@ -1114,19 +1177,53 @@ window.addEventListener('scroll',()=>{
 (function(){
   const slides=document.querySelectorAll('.dep-slide');
   const allDots=document.querySelectorAll('.dep-dot');
-  let cur=0,timer;
+  let cur=0,timer,animating=false;
 
   function show(n){
-    slides.forEach(s=>s.classList.remove('active'));
-    allDots.forEach(d=>d.classList.remove('active'));
+    if(animating) return;
+    const prev=cur;
     cur=(n+slides.length)%slides.length;
-    slides[cur].classList.add('active');
+    if(prev===cur) return;
+    animating=true;
+
+    const dir=n>prev||(prev===slides.length-1&&n===0)?'next':'prev';
+
+    slides[cur].style.transform=dir==='next'?'translateX(80px)':'translateX(-80px)';
+    slides[cur].style.opacity='0';
+    slides[cur].style.visibility='visible';
+    slides[cur].style.position='absolute';
+
+    slides[prev].classList.add(dir==='next'?'exit-left':'exit-right');
+    slides[prev].classList.remove('active');
+
+    slides[cur].getBoundingClientRect();
+
+    slides[cur].style.transform='translateX(0)';
+    slides[cur].style.opacity='1';
+
+    setTimeout(()=>{
+      slides[prev].classList.remove('exit-left','exit-right');
+      slides[cur].style.transform='';
+      slides[cur].style.opacity='';
+      slides[cur].style.visibility='';
+      slides[cur].style.position='';
+      slides[cur].classList.add('active');
+      animating=false;
+    },520);
+
+    allDots.forEach(d=>d.classList.remove('active'));
     document.querySelectorAll(`.dep-dot[data-index="${cur}"]`).forEach(d=>d.classList.add('active'));
   }
 
-  document.querySelectorAll('.dep-next').forEach(btn=>btn.addEventListener('click',()=>{clearInterval(timer);show(cur+1);startAuto()}));
-  document.querySelectorAll('.dep-prev').forEach(btn=>btn.addEventListener('click',()=>{clearInterval(timer);show(cur-1);startAuto()}));
-  allDots.forEach(d=>d.addEventListener('click',()=>{clearInterval(timer);show(+d.dataset.index);startAuto()}));
+  document.querySelectorAll('.dep-next').forEach(btn=>
+    btn.addEventListener('click',()=>{clearInterval(timer);show(cur+1);startAuto()})
+  );
+  document.querySelectorAll('.dep-prev').forEach(btn=>
+    btn.addEventListener('click',()=>{clearInterval(timer);show(cur-1);startAuto()})
+  );
+  allDots.forEach(d=>
+    d.addEventListener('click',()=>{clearInterval(timer);show(+d.dataset.index);startAuto()})
+  );
 
   function startAuto(){timer=setInterval(()=>show(cur+1),6000)}
   startAuto();
