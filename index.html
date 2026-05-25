@@ -7,6 +7,9 @@
 <title>Negócios com IA — Cria a Tua Primeira Renda Online com o Telemóvel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="preload" as="image" href="/hero-bg.png" fetchpriority="high">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" as="style">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!--
@@ -564,6 +567,43 @@ section{padding:96px 0}
   margin-top:48px;font-style:italic;
 }
 
+/* ── PERFORMANCE ── */
+.book-3d{will-change:transform}
+.book-halo{will-change:transform,opacity}
+.gar-seal::before,.gar-seal::after{will-change:transform}
+.dep-slide{will-change:transform,opacity}
+.hero-bg{will-change:contents}
+
+/* Desactiva animações pesadas em mobile */
+@media(max-width:700px){
+  .book-halo{display:none}
+  .hero-bg::before{display:none}
+  .gar-seal::before,.gar-seal::after{animation-duration:40s}
+  .book-3d{animation-duration:8s}
+}
+
+/* Respeita preferência do sistema por menos movimento */
+@media(prefers-reduced-motion:reduce){
+  .book-3d,.book-halo,.gar-seal::before,.gar-seal::after{
+    animation:none!important;
+  }
+  .dep-slide{
+    transition:opacity .2s ease!important;
+  }
+  .rv{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+}
+
+/* Adianta render de secções fora do ecrã */
+.stats,.pain,.transform,.precos,.plano,.autor,
+.stack,.dep-slider,.garantia,.pag,.faq,.final{
+  content-visibility:auto;
+  contain-intrinsic-size:0 500px;
+}
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 </head>
@@ -575,6 +615,7 @@ section{padding:96px 0}
     <div class="logo">
 <div class="logo-mark">
   <img src="/logo.png" alt="Alberto N. Muzé — Negócios com IA"
+    loading="lazy" decoding="async"
     style="height:38px;width:auto;display:block;object-fit:contain">
 </div>
 <span class="nav-logo-text">NEGÓCIOS <em>COM IA</em></span>
@@ -588,7 +629,7 @@ section{padding:96px 0}
   <div class="hero-bg">
     <!-- ⚠️ SWAP: substituir src pela imagem do e-book/campanha (homem + hologramas) -->
     <!-- Recomendado: /assets/hero-bg.jpg | 1600×900px | Mantém a opacidade .22 -->
-    <img id="hero-bg" src="/hero-bg.png" alt="" onerror="this.style.opacity='0'">
+    <img id="hero-bg" src="/hero-bg.png" alt="" fetchpriority="high" decoding="sync" onerror="this.style.opacity='0'">
   </div>
   <div class="wrap">
     <div class="hero-inner">
@@ -625,6 +666,7 @@ section{padding:96px 0}
         <div class="book-3d">
 <img src="/ebook-cover.png"
   alt="Negócios com IA — E-Book"
+  loading="lazy" decoding="async"
   style="
     width:100%;
     aspect-ratio:2/3;
@@ -807,7 +849,7 @@ section{padding:96px 0}
           <div class="autor-initials"><span>A</span></div>
           <!-- ⚠️ SWAP: substituir src pela tua foto profissional -->
           <!-- Recomendado: /assets/autor.jpg | 600×800px | Rosto bem iluminado, fundo neutro ou escuro -->
-          <img id="autor-foto" src="/autor.png" alt="Alberto N. Muzé" onerror="this.style.display='none'">
+          <img id="autor-foto" src="/autor.png" alt="Alberto N. Muzé" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="afc afc-tl"></div><div class="afc afc-tr"></div>
           <div class="afc afc-bl"></div><div class="afc afc-br"></div>
           <div class="autor-badge">O Autor</div>
@@ -896,7 +938,7 @@ section{padding:96px 0}
       <div class="dep-slide active">
         <div class="dep-slide-photo">
           <div class="dep-photo-circle">
-            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
+            <img src="/avatars/carlos.png" alt="Carlos M." loading="lazy" decoding="async" onerror="this.style.display='none'">
             <div class="dep-photo-circle-fb">C</div>
           </div>
           <div class="dep-quote-badge">"</div>
@@ -926,7 +968,7 @@ section{padding:96px 0}
       <div class="dep-slide">
         <div class="dep-slide-photo">
           <div class="dep-photo-circle">
-            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
+            <img src="/avatars/vanessa.png" alt="Vanessa T." loading="lazy" decoding="async" onerror="this.style.display='none'">
             <div class="dep-photo-circle-fb">V</div>
           </div>
           <div class="dep-quote-badge">"</div>
@@ -956,7 +998,7 @@ section{padding:96px 0}
       <div class="dep-slide">
         <div class="dep-slide-photo">
           <div class="dep-photo-circle">
-            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
+            <img src="/avatars/jeremias.png" alt="Jeremias" loading="lazy" decoding="async" onerror="this.style.display='none'">
             <div class="dep-photo-circle-fb">J</div>
           </div>
           <div class="dep-quote-badge">"</div>
@@ -1070,7 +1112,7 @@ section{padding:96px 0}
       <div class="pag-method">
         <div class="pm-logo">
           <!-- ⚠️ SWAP: /assets/mpesa-logo.png → logo oficial M-Pesa (transparente) -->
-          <img src="/m-pesa.png" alt="M-Pesa" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <img src="/m-pesa.png" alt="M-Pesa" loading="lazy" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
           <div class="pm-mpesa-fallback" style="display:none">M</div>
         </div>
         <div class="pm-text"><strong>M-Pesa</strong><span>Pagamento instantâneo</span></div>
@@ -1078,7 +1120,7 @@ section{padding:96px 0}
       <div class="pag-method">
         <div class="pm-logo">
           <!-- ⚠️ SWAP: /assets/emola-logo.png → logo oficial E-Mola (transparente) -->
-          <img src="/e-mola.png" alt="E-Mola" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <img src="/e-mola.png" alt="E-Mola" loading="lazy" decoding="async" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
           <div class="pm-emola-fallback" style="display:none">e</div>
         </div>
         <div class="pm-text"><strong>E-Mola</strong><span>Pagamento instantâneo</span></div>
@@ -1228,6 +1270,28 @@ window.addEventListener('scroll',()=>{
   function startAuto(){timer=setInterval(()=>show(cur+1),6000)}
   startAuto();
 })();
+
+// ── PERFORMANCE: pausa animações quando tab não está visível
+document.addEventListener('visibilitychange',()=>{
+  document.querySelectorAll(
+    '.book-3d,.book-halo,.gar-seal,.marquee-track-fwd,.marquee-track-rev'
+  ).forEach(el=>{
+    el.style.animationPlayState=document.hidden?'paused':'running';
+  });
+});
+
+// ── PERFORMANCE: pausa animações pesadas fora do viewport
+const perfIO=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    const animated=e.target.querySelectorAll(
+      '.book-3d,.book-halo,.gar-seal::before,.gar-seal::after'
+    );
+    animated.forEach(el=>{
+      el.style.animationPlayState=e.isIntersecting?'running':'paused';
+    });
+  });
+},{threshold:0.05});
+document.querySelectorAll('.hero,.garantia').forEach(s=>perfIO.observe(s));
 </script>
 </body>
 </html>
