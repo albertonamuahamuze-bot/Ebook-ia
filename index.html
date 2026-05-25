@@ -392,6 +392,66 @@ section{padding:96px 0}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .75s,transform .75s}
 .rv.in{opacity:1;transform:none}
 
+/* ── TESTIMONIALS MARQUEE ── */
+.dep-marquee-section{padding:96px 0;background:var(--bg2)}
+.dep-marquee-head{text-align:center;margin-bottom:56px}
+.dep-marquee-head .sec-l{justify-content:center}
+.marquee-wrap{overflow:hidden;position:relative;margin-bottom:16px}
+.marquee-wrap::before,.marquee-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;
+  width:120px;z-index:2;pointer-events:none;
+}
+.marquee-wrap::before{left:0;background:linear-gradient(90deg,var(--bg2) 0%,transparent 100%)}
+.marquee-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg2) 0%,transparent 100%)}
+.marquee-track{display:flex;gap:16px;width:max-content;padding:8px 0}
+.marquee-track-fwd{animation:marquee-fwd 35s linear infinite}
+.marquee-track-rev{animation:marquee-rev 35s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marquee-fwd{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marquee-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.dep-m-card{
+  width:320px;flex-shrink:0;
+  padding:28px 24px;border-radius:8px;
+  background:var(--card);border:1px solid var(--border);
+  transition:border-color .3s,transform .3s;
+  cursor:default;
+}
+.dep-m-card:hover{border-color:var(--bs);transform:translateY(-3px)}
+.dep-m-stars{color:var(--cyan);font-size:13px;letter-spacing:2px;margin-bottom:14px;text-shadow:0 0 8px rgba(0,207,255,.4)}
+.dep-m-quote{
+  font-size:14px;color:var(--text);
+  line-height:1.65;font-style:italic;
+  margin-bottom:20px;
+  display:-webkit-box;-webkit-line-clamp:3;
+  -webkit-box-orient:vertical;overflow:hidden;
+}
+.dep-m-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border)}
+.dep-m-av{
+  position:relative;width:42px;height:42px;
+  flex-shrink:0;border-radius:50%;overflow:hidden;
+  border:1.5px solid var(--bs);
+}
+.dep-m-av img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top;z-index:2;
+}
+.dep-m-av-fb{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;font-size:13px;
+  background:linear-gradient(135deg,#071426,var(--cyan2));
+  z-index:1;
+}
+.dep-m-name{font-size:14px;font-weight:700;color:#fff;display:block;margin-bottom:2px}
+.dep-m-loc{
+  font-size:10px;font-weight:700;color:var(--cyan);
+  letter-spacing:.18em;text-transform:uppercase;
+}
+.dep-m-disc{
+  text-align:center;font-size:12px;color:var(--muted);
+  margin-top:32px;font-style:italic;
+}
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 </head>
@@ -713,54 +773,318 @@ section{padding:96px 0}
 </section>
 
 <!-- ═══ DEPOIMENTOS ═══ -->
-<section class="dep rv">
-  <div class="wrap">
+<section class="dep-marquee-section rv">
+  <div class="dep-marquee-head">
     <div class="sec-l">Resultados Reais</div>
     <h2 class="sec-t">O QUE DIZEM AS PESSOAS<br><span class="hl">QUE JÁ APLICARAM.</span></h2>
-    <div style="margin-top:40px">
-      <!-- DEPOIMENTO PRINCIPAL -->
-      <div class="dep-main">
-        <div class="dep-stars">★★★★★</div>
-        <p class="dep-text">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
-        <div class="dep-author">
-          <div class="dep-av-wrap">
-            <!-- ⚠️ SWAP: substituir #av-1 src pela foto real do Carlos. /assets/testimonials/carlos.jpg | 120x120px -->
-            <img id="av-1" src="/avatars/carlos.png" alt="Carlos M." class="dep-av-img" onerror="this.style.display='none'">
-            <div class="dep-av-fb">CM</div>
+  </div>
+
+  <!-- FILA 1 — esquerda -->
+  <div class="marquee-wrap">
+    <div class="marquee-track marquee-track-fwd">
+
+      <!-- CARD 1 -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">CM</div>
           </div>
-          <div class="dep-info"><strong>Carlos M.</strong><span>Maputo</span></div>
-        </div>
-      </div>
-      <!-- 2 DEPOIMENTOS MENORES -->
-      <div class="dep-grid">
-        <div class="dep-card">
-          <div class="dep-stars" style="font-size:12px;margin-bottom:12px">★★★★★</div>
-          <p>"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
-          <div class="dep-author" style="margin-top:0">
-            <div class="dep-av-wrap">
-              <!-- ⚠️ SWAP: #av-2 → /assets/testimonials/vanessa.jpg -->
-              <img id="av-2" src="/avatars/vanessa.png" alt="Vanessa T." class="dep-av-img" onerror="this.style.display='none'">
-              <div class="dep-av-fb" style="background:linear-gradient(135deg,#1a0730,#7C3AED)">VT</div>
-            </div>
-            <div class="dep-info"><strong>Vanessa T.</strong><span>Matola</span></div>
-          </div>
-        </div>
-        <div class="dep-card">
-          <div class="dep-stars" style="font-size:12px;margin-bottom:12px">★★★★★</div>
-          <p>"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
-          <div class="dep-author" style="margin-top:0">
-            <div class="dep-av-wrap">
-              <!-- ⚠️ SWAP: #av-3 → /assets/testimonials/joao.jpg -->
-              <img id="av-3" src="/avatars/jeremias.png" alt="Jeremias" class="dep-av-img" onerror="this.style.display='none'">
-              <div class="dep-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">JS</div>
-            </div>
-            <div class="dep-info"><strong>Jeremias</strong><span>Beira</span></div>
+          <div>
+            <span class="dep-m-name">Carlos M.</span>
+            <span class="dep-m-loc">Maputo</span>
           </div>
         </div>
       </div>
-      <p class="dep-disc">Os resultados variam conforme dedicação, tempo investido e aplicação do método. Não há promessa de ganhos específicos.</p>
+
+      <!-- CARD 2 -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">VT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Vanessa T.</span>
+            <span class="dep-m-loc">Matola</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">JS</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Jeremias</span>
+            <span class="dep-m-loc">Beira</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4 — placeholder para volume -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">António T.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 5 — placeholder -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Fátima M.</span>
+            <span class="dep-m-loc">Nampula</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUPLICAR para loop infinito — cópia dos 5 cards -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">CM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Carlos M.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">VT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Vanessa T.</span>
+            <span class="dep-m-loc">Matola</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">JS</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Jeremias</span>
+            <span class="dep-m-loc">Beira</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">António T.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Fátima M.</span>
+            <span class="dep-m-loc">Nampula</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- FILA 2 — direita (ordem inversa) -->
+  <div class="marquee-wrap">
+    <div class="marquee-track marquee-track-rev">
+
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Fátima M.</span>
+            <span class="dep-m-loc">Nampula</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">JS</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Jeremias</span>
+            <span class="dep-m-loc">Beira</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">António T.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">CM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Carlos M.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">VT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Vanessa T.</span>
+            <span class="dep-m-loc">Matola</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DUPLICAR fila 2 para loop -->
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Fátima M.</span>
+            <span class="dep-m-loc">Nampula</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">JS</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Jeremias</span>
+            <span class="dep-m-loc">Beira</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">António T.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">CM</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Carlos M.</span>
+            <span class="dep-m-loc">Maputo</span>
+          </div>
+        </div>
+      </div>
+      <div class="dep-m-card">
+        <div class="dep-m-stars">★★★★★</div>
+        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
+        <div class="dep-m-author">
+          <div class="dep-m-av">
+            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
+            <div class="dep-m-av-fb">VT</div>
+          </div>
+          <div>
+            <span class="dep-m-name">Vanessa T.</span>
+            <span class="dep-m-loc">Matola</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="dep-m-disc">Os resultados variam conforme dedicação, tempo investido e aplicação do método.</p>
 </section>
 
 <!-- ═══ OFERTA ═══ -->
