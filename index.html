@@ -67,9 +67,9 @@ img{max-width:100%;display:block}
 .hero-bg{position:absolute;inset:0;z-index:0;background:var(--bg)}
 
 /* HERO BACKGROUND IMAGE — swap #hero-bg src */
-#hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.22;filter:saturate(.65) contrast(1.1);transition:opacity .5s}
+#hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.42;filter:saturate(.65) contrast(1.1);transition:opacity .5s}
 .hero-bg::before{content:'';position:absolute;inset:0;z-index:1;background-image:linear-gradient(rgba(0,207,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,207,255,.03) 1px,transparent 1px);background-size:64px 64px}
-.hero-bg::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(4,12,30,.97) 40%,rgba(4,12,30,.55) 80%,rgba(4,12,30,.8) 100%),linear-gradient(0deg,rgba(4,12,30,1) 0%,transparent 25%)}
+.hero-bg::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,rgba(4,12,30,.82) 40%,rgba(4,12,30,.55) 80%,rgba(4,12,30,.8) 100%),linear-gradient(0deg,rgba(4,12,30,1) 0%,transparent 25%)}
 
 .hero-inner{position:relative;z-index:2;display:grid;gap:48px;align-items:center;grid-template-columns:1fr;width:100%}
 @media(min-width:900px){.hero-inner{grid-template-columns:1.05fr .95fr;gap:60px}}
@@ -268,8 +268,8 @@ section{padding:96px 0}
 
 /* TESTIMONIAL AVATAR — swap #av-1, #av-2, #av-3 src */
 .dep-av-wrap{position:relative;width:44px;height:44px;flex-shrink:0}
-.dep-av-img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;border:1.5px solid var(--bs)}
-.dep-av-fb{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#071426,var(--cyan2));border:1.5px solid var(--bs);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;letter-spacing:.04em;position:relative;z-index:1}
+.dep-av-img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;border:1.5px solid var(--bs);z-index:2}
+.dep-av-fb{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#071426,var(--cyan2));border:1.5px solid var(--bs);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:14px;letter-spacing:.04em;position:absolute;inset:0;z-index:1}
 .dep-info strong{font-size:14px;color:#fff;display:block;font-weight:600}
 .dep-info span{font-size:11px;color:var(--cyan);letter-spacing:.15em;text-transform:uppercase;font-weight:700}
 .dep-grid{display:grid;gap:16px;grid-template-columns:1fr}
@@ -391,13 +391,9 @@ section{padding:96px 0}
 
 .rv{opacity:0;transform:translateY(20px);transition:opacity .75s,transform .75s}
 .rv.in{opacity:1;transform:none}
-.t-icon i, .stack-ico i {
-  font-size: 22px;
-  color: var(--cyan);
-  --ph-duotone-opacity: 0.25;
-}
+
 </style>
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 </head>
 <body>
 
@@ -405,21 +401,14 @@ section{padding:96px 0}
 <nav class="nav">
   <div class="wrap nav-row">
     <div class="logo">
-      <!-- LOGO MARK (geometric placeholder) -->
-      <div class="logo-mark">
-        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="36" height="36" rx="6" fill="rgba(0,207,255,0.06)"/>
-          <rect x="3" y="3" width="30" height="30" rx="4" stroke="rgba(0,207,255,0.35)" stroke-width="1"/>
-          <path d="M10 26V10L18 22L26 10V26" stroke="#00CFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <!-- ⚠️ SWAP: substituir src pelo teu logo real. Ex: /assets/logo.svg (altura 32px) -->
-      <!-- Se o logo não carregar, aparece o texto como fallback automaticamente -->
-      <div class="logo-img-wrap">
-        <img class="logo-img" src="/favicon.png" alt="Negócios com IA"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-        <span class="logo-fallback" style="display:block">NEGÓCIOS <em>COM IA</em></span>
-      </div>
+<div class="logo-mark">
+  <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="36" height="36" rx="6" fill="rgba(0,207,255,0.06)"/>
+    <rect x="3" y="3" width="30" height="30" rx="4" stroke="rgba(0,207,255,0.35)" stroke-width="1"/>
+    <path d="M10 26V10L18 22L26 10V26" stroke="#00CFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+<span class="nav-logo-text">NEGÓCIOS <em>COM IA</em></span>
     </div>
     <button class="nav-btn" onclick="go()">ACESSO · 397 MT</button>
   </div>
@@ -444,10 +433,10 @@ section{padding:96px 0}
           Há pessoas comuns em Moçambique a criar a primeira renda online usando <strong>apenas o telemóvel e ferramentas gratuitas de IA.</strong> Este e-book mostra exactamente como elas fizeram — e como tu podes replicar.
         </p>
         <div class="hero-pills">
-          <span class="pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Funciona com o telemóvel que já tens</span>
-          <span class="pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Ferramentas 100% gratuitas</span>
-          <span class="pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Primeiros resultados em menos de 30 dias</span>
-          <span class="pill"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Pensado para a realidade moçambicana</span>
+          <span class="pill"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Funciona com o telemóvel que já tens</span>
+          <span class="pill"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Ferramentas 100% gratuitas</span>
+          <span class="pill"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Primeiros resultados em menos de 30 dias</span>
+          <span class="pill"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Pensado para a realidade moçambicana</span>
         </div>
         <div class="hero-cta">
           <button class="btn-main" onclick="go()">
@@ -455,9 +444,9 @@ section{padding:96px 0}
             <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </button>
           <div class="trust-row">
-            <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Acesso imediato</span>
-            <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Garantia 7 dias</span>
-            <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>M-Pesa / E-Mola</span>
+            <span><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Acesso imediato</span>
+            <span><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Garantia 7 dias</span>
+            <span><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>M-Pesa / E-Mola</span>
           </div>
         </div>
       </div>
@@ -465,29 +454,21 @@ section{padding:96px 0}
       <div class="book-wrap">
         <div class="book-halo"></div>
         <div class="book-3d">
-          <div class="book-card">
-            <div class="book-spine"></div>
-            <div class="bc bc-tl"></div><div class="bc bc-tr"></div>
-            <div class="bc bc-bl"></div><div class="bc bc-br"></div>
-            <div class="book-label">E-Book · Vol. 01 · 2026</div>
-            <div class="book-h">Negócios<br>com IA</div>
-            <div class="book-visual">
-              <svg viewBox="0 0 76 76" fill="none">
-                <circle cx="38" cy="38" r="34" stroke="#00CFFF" stroke-width=".8" opacity=".35"/>
-                <circle cx="38" cy="38" r="24" stroke="#00CFFF" stroke-width="1" opacity=".55"/>
-                <circle cx="38" cy="38" r="14" stroke="#00CFFF" stroke-width="1.4" opacity=".8"/>
-                <circle cx="38" cy="38" r="5" fill="#00CFFF"/>
-                <line x1="4" y1="38" x2="72" y2="38" stroke="#00CFFF" stroke-width=".6" opacity=".3"/>
-                <line x1="38" y1="4" x2="38" y2="72" stroke="#00CFFF" stroke-width=".6" opacity=".3"/>
-                <circle cx="38" cy="4" r="2" fill="#00CFFF" opacity=".5"/>
-                <circle cx="38" cy="72" r="2" fill="#00CFFF" opacity=".5"/>
-                <circle cx="4" cy="38" r="2" fill="#00CFFF" opacity=".5"/>
-                <circle cx="72" cy="38" r="2" fill="#00CFFF" opacity=".5"/>
-              </svg>
-            </div>
-            <div class="book-desc">Cria renda online usando<br>apenas o telemóvel — do zero.</div>
-            <div class="book-by">Alberto N. Muzé</div>
-          </div>
+<img src="/ebook-cover.png"
+  alt="Negócios com IA — E-Book"
+  style="
+    width:100%;
+    aspect-ratio:2/3;
+    object-fit:cover;
+    border-radius:4px 10px 10px 4px;
+    border:1px solid rgba(0,207,255,0.4);
+    box-shadow:
+      -8px 0 0 -1px rgba(0,207,255,.18),
+      -16px 0 0 -3px rgba(0,207,255,.07),
+      24px 36px 72px rgba(0,0,0,.8),
+      0 0 60px rgba(0,207,255,.18);
+    display:block;
+  ">
         </div>
       </div>
     </div>
@@ -535,7 +516,7 @@ section{padding:96px 0}
       <div class="t-card">
         <div class="t-num">01</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-pencil-simple-line"></i>
+          <i class="ti ti-pencil" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>Conteúdo que as empresas pagam</h3>
         <p>Como usar IA para criar posts, legendas e mensagens de vendas que negócios locais estão dispostos a pagar — e a pedir mais todo o mês.</p>
@@ -545,7 +526,7 @@ section{padding:96px 0}
       <div class="t-card">
         <div class="t-num">02</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-paint-brush-broad"></i>
+          <i class="ti ti-brush" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>A ferramenta que transforma qualquer pessoa em designer</h3>
         <p>Logótipos, flyers e capas profissionais que clientes pagam até 2.500 MZN por projecto — mesmo nunca tendo estudado design na vida.</p>
@@ -555,7 +536,7 @@ section{padding:96px 0}
       <div class="t-card">
         <div class="t-num">03</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-video-camera"></i>
+          <i class="ti ti-video" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>Vídeos de agência feitos no telemóvel</h3>
         <p>Edição moderna que antes exigia computador e equipa. Agora fazes directamente do celular — e cobras entre 1.000 e 3.500 MZN por entrega.</p>
@@ -565,7 +546,7 @@ section{padding:96px 0}
       <div class="t-card">
         <div class="t-num">04</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-globe"></i>
+          <i class="ti ti-world" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>Sites profissionais sem programar uma linha</h3>
         <p>A IA cria o site completo em minutos. Tu publicas e cobras de 2.000 a 6.000 MZN. Sem código. Sem agência. Sem complicação.</p>
@@ -575,7 +556,7 @@ section{padding:96px 0}
       <div class="t-card locked">
         <div class="t-num">05</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-chat-circle-dots"></i>
+          <i class="ti ti-brand-whatsapp" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>O Script que fecha clientes no WhatsApp</h3>
         <p>A mensagem exacta para abordar negócios locais sem soares desesperado — e fechar clientes reais só com o telemóvel.</p>
@@ -585,7 +566,7 @@ section{padding:96px 0}
       <div class="t-card locked">
         <div class="t-num">06</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-gift"></i>
+          <i class="ti ti-gift" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>A amostra grátis que faz o cliente vir até ti</h3>
         <p>Uma técnica simples que inverte a lógica da venda — em vez de correres atrás dos clientes, eles vêm ter contigo.</p>
@@ -595,7 +576,7 @@ section{padding:96px 0}
       <div class="t-card locked">
         <div class="t-num">07</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-arrows-clockwise"></i>
+          <i class="ti ti-repeat" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>Como transformar um cliente em renda recorrente</h3>
         <p>O segredo para não depender de novas vendas todos os meses — e construir um rendimento estável e previsível.</p>
@@ -605,7 +586,7 @@ section{padding:96px 0}
       <div class="t-card locked">
         <div class="t-num">08</div>
         <div class="t-icon">
-          <i class="ph-duotone ph-rocket-launch"></i>
+          <i class="ti ti-rocket" style="font-size:22px;color:var(--cyan)"></i>
         </div>
         <h3>O plano de 30 dias do zero ao primeiro pagamento</h3>
         <p>O roadmap completo — semana a semana, passo a passo. Para que nunca fiques sem saber qual é o próximo movimento.</p>
@@ -690,35 +671,35 @@ section{padding:96px 0}
     <div class="stack-list">
       <div class="stack-row">
         <div class="stack-ico">
-          <i class="ph-duotone ph-book-open"></i>
+          <i class="ti ti-book" style="font-size:20px;color:var(--cyan)"></i>
         </div>
         <div class="stack-n"><strong>E-BOOK "NEGÓCIOS COM IA" — EDIÇÃO COMPLETA</strong><span>12 capítulos · 8 métodos detalhados · Plano de 30 dias</span></div>
         <div class="stack-p">1.500 MZN</div>
       </div>
       <div class="stack-row">
         <div class="stack-ico">
-          <i class="ph-duotone ph-lightning"></i>
+          <i class="ti ti-bolt" style="font-size:20px;color:var(--cyan)"></i>
         </div>
         <div class="stack-n"><strong>BÓNUS 1 — PACK DE 5 PROMPTS ESTRATÉGICOS</strong><span>Prontos a copiar: legendas, vendas, conteúdo, flyers e ideias de negócio</span></div>
         <div class="stack-p">450 MZN</div>
       </div>
       <div class="stack-row">
         <div class="stack-ico">
-          <i class="ph-duotone ph-cube"></i>
+          <i class="ti ti-box" style="font-size:20px;color:var(--cyan)"></i>
         </div>
         <div class="stack-n"><strong>BÓNUS 2 — ÁREA EXCLUSIVA DE RECURSOS</strong><span>Biblioteca crescente: prompts extras, ferramentas curadas e tutoriais em vídeo</span></div>
         <div class="stack-p">600 MZN</div>
       </div>
       <div class="stack-row">
         <div class="stack-ico">
-          <i class="ph-duotone ph-users-three"></i>
+          <i class="ti ti-users" style="font-size:20px;color:var(--cyan)"></i>
         </div>
         <div class="stack-n"><strong>BÓNUS 3 — COMUNIDADE VIP NO WHATSAPP</strong><span>Acesso ao grupo privado com membros activos, suporte e oportunidades</span></div>
         <div class="stack-p">500 MZN</div>
       </div>
       <div class="stack-row">
         <div class="stack-ico">
-          <i class="ph-duotone ph-arrow-clockwise"></i>
+          <i class="ti ti-refresh" style="font-size:20px;color:var(--cyan)"></i>
         </div>
         <div class="stack-n"><strong>BÓNUS 4 — ATUALIZAÇÕES VITALÍCIAS</strong><span>Todas as novas versões e materiais adicionados no futuro — sem custo extra</span></div>
         <div class="stack-p">300 MZN</div>
@@ -806,9 +787,9 @@ section{padding:96px 0}
           <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
         <div class="oferta-trust">
-          <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Pagamento Seguro</span>
-          <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>M-Pesa / E-Mola</span>
-          <span><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Entrega em 30 min</span>
+          <span><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Pagamento Seguro</span>
+          <span><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>M-Pesa / E-Mola</span>
+          <span><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Entrega em 30 min</span>
         </div>
       </div>
     </div>
@@ -837,10 +818,10 @@ section{padding:96px 0}
             Compra o e-book. Lê. Aplica. Testa. Se nos primeiros <strong>7 dias</strong> — por qualquer razão — sentires que o material não é para ti, basta enviar uma mensagem. Devolvemos <strong>100% do teu dinheiro</strong>. Sem perguntas. Sem formulários. Sem demoras. <strong>Sem qualquer ressentimento.</strong>
           </p>
           <div class="gar-items">
-            <div class="gar-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>100% devolvido</div>
-            <div class="gar-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Sem perguntas</div>
-            <div class="gar-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Sem burocracia</div>
-            <div class="gar-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>7 dias completos</div>
+            <div class="gar-item"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>100% devolvido</div>
+            <div class="gar-item"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Sem perguntas</div>
+            <div class="gar-item"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>Sem burocracia</div>
+            <div class="gar-item"><i class="ti ti-check" style="font-size:13px;color:var(--green)"></i>7 dias completos</div>
           </div>
         </div>
       </div>
