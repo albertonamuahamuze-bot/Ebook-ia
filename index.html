@@ -392,64 +392,115 @@ section{padding:96px 0}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .75s,transform .75s}
 .rv.in{opacity:1;transform:none}
 
-/* ── TESTIMONIALS MARQUEE ── */
-.dep-marquee-section{padding:96px 0;background:var(--bg2)}
-.dep-marquee-head{text-align:center;margin-bottom:56px}
-.dep-marquee-head .sec-l{justify-content:center}
-.marquee-wrap{overflow:hidden;position:relative;margin-bottom:16px}
-.marquee-wrap::before,.marquee-wrap::after{
-  content:'';position:absolute;top:0;bottom:0;
-  width:120px;z-index:2;pointer-events:none;
+/* ── TESTIMONIALS SLIDER ── */
+.dep-slider{padding:100px 0;background:var(--bg2)}
+.dep-slider-head{text-align:center;margin-bottom:64px}
+.dep-slider-head .sec-l{justify-content:center}
+.dep-slider-wrap{
+  max-width:960px;margin:0 auto;
+  position:relative;
 }
-.marquee-wrap::before{left:0;background:linear-gradient(90deg,var(--bg2) 0%,transparent 100%)}
-.marquee-wrap::after{right:0;background:linear-gradient(-90deg,var(--bg2) 0%,transparent 100%)}
-.marquee-track{display:flex;gap:16px;width:max-content;padding:8px 0}
-.marquee-track-fwd{animation:marquee-fwd 35s linear infinite}
-.marquee-track-rev{animation:marquee-rev 35s linear infinite}
-.marquee-track:hover{animation-play-state:paused}
-@keyframes marquee-fwd{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes marquee-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-.dep-m-card{
-  width:320px;flex-shrink:0;
-  padding:28px 24px;border-radius:8px;
-  background:var(--card);border:1px solid var(--border);
-  transition:border-color .3s,transform .3s;
-  cursor:default;
+.dep-slide{
+  display:none;
+  grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
 }
-.dep-m-card:hover{border-color:var(--bs);transform:translateY(-3px)}
-.dep-m-stars{color:var(--cyan);font-size:13px;letter-spacing:2px;margin-bottom:14px;text-shadow:0 0 8px rgba(0,207,255,.4)}
-.dep-m-quote{
-  font-size:14px;color:var(--text);
-  line-height:1.65;font-style:italic;
-  margin-bottom:20px;
-  display:-webkit-box;-webkit-line-clamp:3;
-  -webkit-box-orient:vertical;overflow:hidden;
+@media(max-width:700px){
+  .dep-slide{grid-template-columns:1fr;gap:40px}
 }
-.dep-m-author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--border)}
-.dep-m-av{
-  position:relative;width:42px;height:42px;
-  flex-shrink:0;border-radius:50%;overflow:hidden;
-  border:1.5px solid var(--bs);
+.dep-slide.active{display:grid}
+.dep-slide-photo{
+  position:relative;
+  display:flex;justify-content:center;align-items:center;
 }
-.dep-m-av img{
+.dep-photo-circle{
+  width:280px;height:280px;border-radius:50%;
+  overflow:hidden;
+  border:2px solid var(--bs);
+  box-shadow:0 0 60px rgba(0,207,255,.2),0 30px 60px rgba(0,0,0,.5);
+  position:relative;flex-shrink:0;
+}
+@media(max-width:700px){
+  .dep-photo-circle{width:200px;height:200px}
+}
+.dep-photo-circle img{
   position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:top;z-index:2;
+  object-fit:cover;object-position:top center;
+  z-index:2;
 }
-.dep-m-av-fb{
+.dep-photo-circle-fb{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
-  font-weight:700;color:#fff;font-size:13px;
-  background:linear-gradient(135deg,#071426,var(--cyan2));
-  z-index:1;
+  font-family:'Bebas Neue',sans-serif;font-size:80px;
+  color:var(--cyan);opacity:.3;z-index:1;
+  background:linear-gradient(160deg,#071426,#0C1B30);
 }
-.dep-m-name{font-size:14px;font-weight:700;color:#fff;display:block;margin-bottom:2px}
-.dep-m-loc{
-  font-size:10px;font-weight:700;color:var(--cyan);
-  letter-spacing:.18em;text-transform:uppercase;
+.dep-quote-badge{
+  position:absolute;bottom:10px;left:50%;
+  transform:translateX(-50%) translateX(-80px);
+  width:52px;height:52px;border-radius:50%;
+  background:var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(0,207,255,.45);
+  z-index:3;font-size:22px;color:#040C1E;font-weight:900;
+  line-height:1;
+}
+.dep-slide-content{}
+.dep-slide-stars{
+  color:var(--cyan);font-size:16px;
+  letter-spacing:3px;margin-bottom:24px;
+  text-shadow:0 0 10px rgba(0,207,255,.4);
+}
+.dep-slide-quote{
+  font-size:clamp(17px,2.2vw,22px);
+  color:#fff;line-height:1.6;font-weight:500;
+  font-style:italic;margin-bottom:32px;
+  position:relative;padding-left:20px;
+}
+.dep-slide-quote::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--cyan);border-radius:2px;
+}
+.dep-slide-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;color:#fff;letter-spacing:.06em;
+  display:block;margin-bottom:4px;
+}
+.dep-slide-loc{
+  font-size:11px;font-weight:700;color:var(--cyan);
+  letter-spacing:.22em;text-transform:uppercase;
+  display:block;margin-bottom:32px;
+}
+.dep-controls{
+  display:flex;align-items:center;gap:16px;
+}
+.dep-arrow{
+  width:48px;height:48px;border-radius:50%;
+  border:1.5px solid var(--bs);
+  background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .25s;
+  flex-shrink:0;
+}
+.dep-arrow:hover{
+  background:var(--cyan);border-color:var(--cyan);
+}
+.dep-arrow:hover svg{stroke:#040C1E}
+.dep-arrow svg{width:18px;height:18px;stroke:var(--cyan);fill:none;stroke-width:2.5;transition:stroke .25s}
+.dep-dots{display:flex;gap:8px}
+.dep-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--border);border:none;
+  cursor:pointer;transition:all .3s;padding:0;
+}
+.dep-dot.active{
+  background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);
+  width:24px;border-radius:4px;
 }
 .dep-m-disc{
   text-align:center;font-size:12px;color:var(--muted);
-  margin-top:32px;font-style:italic;
+  margin-top:48px;font-style:italic;
 }
 
 </style>
@@ -773,318 +824,109 @@ section{padding:96px 0}
 </section>
 
 <!-- ═══ DEPOIMENTOS ═══ -->
-<section class="dep-marquee-section rv">
-  <div class="dep-marquee-head">
-    <div class="sec-l">Resultados Reais</div>
-    <h2 class="sec-t">O QUE DIZEM AS PESSOAS<br><span class="hl">QUE JÁ APLICARAM.</span></h2>
-  </div>
+<section class="dep-slider rv">
+  <div class="wrap">
+    <div class="dep-slider-head">
+      <div class="sec-l">Resultados Reais</div>
+      <h2 class="sec-t">O QUE DIZEM AS PESSOAS<br><span class="hl">QUE JÁ APLICARAM.</span></h2>
+    </div>
 
-  <!-- FILA 1 — esquerda -->
-  <div class="marquee-wrap">
-    <div class="marquee-track marquee-track-fwd">
+    <div class="dep-slider-wrap">
 
-      <!-- CARD 1 -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
+      <!-- SLIDE 1 -->
+      <div class="dep-slide active">
+        <div class="dep-slide-photo">
+          <div class="dep-photo-circle">
             <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">CM</div>
+            <div class="dep-photo-circle-fb">C</div>
           </div>
-          <div>
-            <span class="dep-m-name">Carlos M.</span>
-            <span class="dep-m-loc">Maputo</span>
+          <div class="dep-quote-badge">"</div>
+        </div>
+        <div class="dep-slide-content">
+          <div class="dep-slide-stars">★★★★★</div>
+          <p class="dep-slide-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
+          <span class="dep-slide-name">Carlos M.</span>
+          <span class="dep-slide-loc">Maputo</span>
+          <div class="dep-controls">
+            <button class="dep-arrow dep-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="dep-dots">
+              <button class="dep-dot active" data-index="0"></button>
+              <button class="dep-dot" data-index="1"></button>
+              <button class="dep-dot" data-index="2"></button>
+            </div>
+            <button class="dep-arrow dep-next" aria-label="Próximo">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- CARD 2 -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
+      <!-- SLIDE 2 -->
+      <div class="dep-slide">
+        <div class="dep-slide-photo">
+          <div class="dep-photo-circle">
             <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">VT</div>
+            <div class="dep-photo-circle-fb">V</div>
           </div>
-          <div>
-            <span class="dep-m-name">Vanessa T.</span>
-            <span class="dep-m-loc">Matola</span>
+          <div class="dep-quote-badge">"</div>
+        </div>
+        <div class="dep-slide-content">
+          <div class="dep-slide-stars">★★★★★</div>
+          <p class="dep-slide-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes. Recomendo a qualquer pessoa."</p>
+          <span class="dep-slide-name">Vanessa T.</span>
+          <span class="dep-slide-loc">Matola</span>
+          <div class="dep-controls">
+            <button class="dep-arrow dep-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="dep-dots">
+              <button class="dep-dot" data-index="0"></button>
+              <button class="dep-dot active" data-index="1"></button>
+              <button class="dep-dot" data-index="2"></button>
+            </div>
+            <button class="dep-arrow dep-next" aria-label="Próximo">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- CARD 3 -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
+      <!-- SLIDE 3 -->
+      <div class="dep-slide">
+        <div class="dep-slide-photo">
+          <div class="dep-photo-circle">
             <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">JS</div>
+            <div class="dep-photo-circle-fb">J</div>
           </div>
-          <div>
-            <span class="dep-m-name">Jeremias</span>
-            <span class="dep-m-loc">Beira</span>
-          </div>
+          <div class="dep-quote-badge">"</div>
         </div>
-      </div>
-
-      <!-- CARD 4 — placeholder para volume -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">António T.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- CARD 5 — placeholder -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Fátima M.</span>
-            <span class="dep-m-loc">Nampula</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- DUPLICAR para loop infinito — cópia dos 5 cards -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">CM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Carlos M.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">VT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Vanessa T.</span>
-            <span class="dep-m-loc">Matola</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">JS</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Jeremias</span>
-            <span class="dep-m-loc">Beira</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">António T.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Fátima M.</span>
-            <span class="dep-m-loc">Nampula</span>
+        <div class="dep-slide-content">
+          <div class="dep-slide-stars">★★★★★</div>
+          <p class="dep-slide-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Nunca tive tanta clareza sobre o que oferecer e quanto pedir."</p>
+          <span class="dep-slide-name">Jeremias</span>
+          <span class="dep-slide-loc">Beira</span>
+          <div class="dep-controls">
+            <button class="dep-arrow dep-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            </button>
+            <div class="dep-dots">
+              <button class="dep-dot" data-index="0"></button>
+              <button class="dep-dot" data-index="1"></button>
+              <button class="dep-dot active" data-index="2"></button>
+            </div>
+            <button class="dep-arrow dep-next" aria-label="Próximo">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
           </div>
         </div>
       </div>
 
     </div>
+
+    <p class="dep-m-disc">Os resultados variam conforme dedicação, tempo investido e aplicação do método.</p>
   </div>
-
-  <!-- FILA 2 — direita (ordem inversa) -->
-  <div class="marquee-wrap">
-    <div class="marquee-track marquee-track-rev">
-
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Fátima M.</span>
-            <span class="dep-m-loc">Nampula</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">JS</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Jeremias</span>
-            <span class="dep-m-loc">Beira</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">António T.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">CM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Carlos M.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">VT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Vanessa T.</span>
-            <span class="dep-m-loc">Matola</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- DUPLICAR fila 2 para loop -->
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O plano de 30 dias é o que faz a diferença. Não precisas de inventar nada — segues os passos e os resultados aparecem. Material muito bem estruturado."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#0a2b1c,#059669)">FM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Fátima M.</span>
-            <span class="dep-m-loc">Nampula</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"A tabela de preços por si só já vale o investimento — sabes exactamente quanto cobrar. Recomendo a qualquer pessoa com telemóvel que queira começar."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/jeremias.png" alt="Jeremias" onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">JS</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Jeremias</span>
-            <span class="dep-m-loc">Beira</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Nunca imaginei que fosse possível ganhar dinheiro apenas com o telemóvel. Depois de aplicar o método, fechei o primeiro cliente na terceira semana."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <div class="dep-m-av-fb" style="background:linear-gradient(135deg,#1a0530,#7C3AED)">AT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">António T.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"Comecei do zero e em duas semanas já estava a aplicar IA no meu negócio. Nunca pensei que fosse tão simples — o material é directo, sem enrolação. Vale cada Metical."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/carlos.png" alt="Carlos M." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">CM</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Carlos M.</span>
-            <span class="dep-m-loc">Maputo</span>
-          </div>
-        </div>
-      </div>
-      <div class="dep-m-card">
-        <div class="dep-m-stars">★★★★★</div>
-        <p class="dep-m-quote">"O conteúdo é simples, moderno e directo ao ponto. A parte dos prompts e do WhatsApp foi a que mais me ajudou a fechar os primeiros clientes."</p>
-        <div class="dep-m-author">
-          <div class="dep-m-av">
-            <img src="/avatars/vanessa.png" alt="Vanessa T." onerror="this.style.display='none'">
-            <div class="dep-m-av-fb">VT</div>
-          </div>
-          <div>
-            <span class="dep-m-name">Vanessa T.</span>
-            <span class="dep-m-loc">Matola</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <p class="dep-m-disc">Os resultados variam conforme dedicação, tempo investido e aplicação do método.</p>
 </section>
 
 <!-- ═══ OFERTA ═══ -->
@@ -1270,6 +1112,28 @@ window.addEventListener('scroll',()=>{
   const y=window.scrollY,ot=document.getElementById('oferta').getBoundingClientRect().top+y;
   document.getElementById('st').classList.toggle('on',y>500&&y<ot-150);
 },{ passive:true });
+
+// ── TESTIMONIALS SLIDER
+(function(){
+  const slides=document.querySelectorAll('.dep-slide');
+  const allDots=document.querySelectorAll('.dep-dot');
+  let cur=0,timer;
+
+  function show(n){
+    slides.forEach(s=>s.classList.remove('active'));
+    allDots.forEach(d=>d.classList.remove('active'));
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add('active');
+    document.querySelectorAll(`.dep-dot[data-index="${cur}"]`).forEach(d=>d.classList.add('active'));
+  }
+
+  document.querySelectorAll('.dep-next').forEach(btn=>btn.addEventListener('click',()=>{clearInterval(timer);show(cur+1);startAuto()}));
+  document.querySelectorAll('.dep-prev').forEach(btn=>btn.addEventListener('click',()=>{clearInterval(timer);show(cur-1);startAuto()}));
+  allDots.forEach(d=>d.addEventListener('click',()=>{clearInterval(timer);show(+d.dataset.index);startAuto()}));
+
+  function startAuto(){timer=setInterval(()=>show(cur+1),6000)}
+  startAuto();
+})();
 </script>
 </body>
 </html>
