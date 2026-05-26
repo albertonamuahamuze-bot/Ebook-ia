@@ -10,7 +10,11 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "Bash(curl -s -o nul -w \"%{http_code}\" http://localhost:5173)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(node compress.mjs)",
+      "Bash(Select-String -Path index.html -Pattern '\\(favicon\\\\.png|hero-bg\\\\.png|autor\\\\.png|ebook-cover\\\\.png|m-pesa\\\\.png|e-mola\\\\.png|logo\\\\.png|avatars/carlos\\\\.png|avatars/vanessa\\\\.png|avatars/jeremias\\\\.png\\)')",
+      "Bash(Measure-Object)",
+      "Bash(Select-Object -ExpandProperty Count)"
     ]
   }
 }
