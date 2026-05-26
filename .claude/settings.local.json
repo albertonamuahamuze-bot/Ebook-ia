@@ -14,7 +14,9 @@
       "Bash(node compress.mjs)",
       "Bash(Select-String -Path index.html -Pattern '\\(favicon\\\\.png|hero-bg\\\\.png|autor\\\\.png|ebook-cover\\\\.png|m-pesa\\\\.png|e-mola\\\\.png|logo\\\\.png|avatars/carlos\\\\.png|avatars/vanessa\\\\.png|avatars/jeremias\\\\.png\\)')",
       "Bash(Measure-Object)",
-      "Bash(Select-Object -ExpandProperty Count)"
+      "Bash(Select-Object -ExpandProperty Count)",
+      "Bash(git rm *)",
+      "Bash(node -e ' *)"
     ]
   }
 }
